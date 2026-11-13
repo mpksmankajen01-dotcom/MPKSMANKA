@@ -21,15 +21,14 @@
     .solara-card-custom {
       background-image: linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)), 
                         url('https://raw.githubusercontent.com/mpksmankajen01-dotcom/MPKSMANKA/main/WhatsApp_Image_2026-11-07_at_19.14.19-removebg-preview.png') !important;
-      background-size: 100% 100%, 110% auto !important;
+      background-size: 100% 100%, 40% auto !important;
       background-repeat: no-repeat, no-repeat !important;
       background-position: center, center !important;
       backdrop-filter: blur(14px); 
       -webkit-backdrop-filter: blur(14px);
-      /* Garis tepi disesuaikan dengan warna tema background (Kombinasi Emas & Biru Elegan) */
       border: 2px solid rgba(212, 175, 55, 0.6) !important; 
       border-radius: 18px;
-      padding: 2.2rem; 
+      padding: 2rem; 
       box-shadow: 0 10px 35px 0 rgba(0, 0, 0, 0.45), 0 0 20px rgba(30, 58, 138, 0.2);
       max-width: 650px; 
       width: 95%; 
@@ -37,24 +36,38 @@
       color: #000000;
       animation: cardSlideIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    .solara-card-custom h2 { margin-bottom: 8px; }
-    .solara-card-custom p { margin-bottom: 12px; color: #000000; font-weight: 500; }
     
-    .btn-full { width: 100%; padding: 12px 16px; margin-top: 8px; font-weight: 600; font-size: 15px; border-radius: 12px; border: none; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .solara-card-custom h2 { font-size: 1.35rem; margin-bottom: 6px; }
+    .solara-card-custom h3 { font-size: 1.1rem; }
+    
+    /* white-space: pre-line memastikan teks dan enter dari Google Sheets terbaca persis */
+    .solara-card-custom p { 
+      font-size: 13.5px; 
+      line-height: 1.45; 
+      margin-bottom: 10px; 
+      color: #111111; 
+      font-weight: 500; 
+      white-space: pre-line; 
+    }
+    
+    .btn-full { width: 100%; padding: 11px 16px; margin-top: 6px; font-weight: 600; font-size: 14px; border-radius: 12px; border: none; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
     .btn-full:hover, .btn-back:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35); }
     .btn-primary { background-color: #1e3a8a; color: white; }
     .btn-secondary { background-color: #4b5563; color: white; }
     .btn-success { background-color: #16a34a; color: white; }
     .btn-dark { background-color: #1f2937; color: white; }
-    .btn-back { padding: 8px 16px; border-radius: 12px; border: 1px solid #1f2937; background: transparent; color: #1f2937; cursor: pointer; font-weight: 600; margin-bottom: 12px; }
+    .btn-back { padding: 6px 14px; border-radius: 10px; border: 1px solid #1f2937; background: transparent; color: #1f2937; cursor: pointer; font-weight: 600; font-size: 13px; margin-bottom: 10px; }
     
-    .divider { border: 0; height: 1px; background: rgba(0,0,0,0.15); margin: 20px 0; }
-    .info-item-card { background: rgba(255, 255, 255, 0.85); border-radius: 12px; padding: 15px; margin-bottom: 12px; border-left: 4px solid #1e3a8a; box-shadow: 0 4px 15px rgba(0,0,0,0.05); animation: cardSlideIn 0.4s ease; cursor: pointer; transition: transform 0.2s ease; }
+    .divider { border: 0; height: 1px; background: rgba(0,0,0,0.15); margin: 16px 0; }
+    
+    .info-item-card { background: rgba(255, 255, 255, 0.9); border-radius: 12px; padding: 14px; margin-bottom: 10px; border-left: 4px solid #1e3a8a; box-shadow: 0 4px 15px rgba(0,0,0,0.05); animation: cardSlideIn 0.4s ease; cursor: pointer; transition: transform 0.2s ease; }
     .info-item-card:active { transform: scale(0.98); }
-    .form-group { margin-bottom: 14px; }
-    .form-group label { display: block; margin-bottom: 6px; font-weight: 500; }
-    .form-control { width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; outline: none; }
-    .alert { padding: 12px; border-radius: 8px; margin-top: 12px; font-size: 14px; }
+    .info-item-card h4 { font-size: 1rem; margin-bottom: 6px; color: #1e3a8a; }
+
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 13.5px; }
+    .form-control { width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 13.5px; outline: none; }
+    .alert { padding: 10px 12px; border-radius: 8px; margin-top: 10px; font-size: 13.5px; }
     .alert-success { background-color: #dcfce7; color: #166534; }
     .alert-info { background-color: #e0f2fe; color: #075985; }
     .alert-error { background-color: #fee2e2; color: #991b1b; }
@@ -65,13 +78,13 @@
   <div class="animated-bg">
     <!-- Lobby Utama -->
     <div id="page-lobby" class="solara-card-custom">
-      <h2>Selamat Datang di MPK Digital SMANKA!</h2>
+      <h2>🌟 Selamat Datang di MPK SMANKA!</h2>
       <p>Jelajahi fitur interaktif aplikasi kami melalui menu di bawah ini:</p>
-      <button class="btn-full btn-primary" onclick="showPage('codebreaker'); initGame();">🎮 Mainkan Game Interaktif</button>
+      <button class="btn-full btn-primary" onclick="showPage('codebreaker'); initGame();">🎮 Mainkan Game Code Breaker</button>
       <button class="btn-full btn-primary" onclick="showPage('kritik')">📝 Masuk ke Kritik & Pesan</button>
       <hr class="divider">
-      <h3>📌 Informasi Terkini:</h3>
-      <div id="sheet-data-container" style="margin-top: 10px;">
+      <h3>Informasi:</h3>
+      <div id="sheet-data-container" style="margin-top: 8px;">
         <div class="alert alert-info">⏳ Memuat informasi dari server...</div>
       </div>
     </div>
@@ -88,7 +101,7 @@
         </div>
         <button class="btn-full btn-success" onclick="handleGuess()">Analisis Tebakan 🔍</button>
       </div>
-      <div id="cb-history-area" style="margin-top: 15px;"></div>
+      <div id="cb-history-area" style="margin-top: 12px;"></div>
       <div id="cb-result-area"></div>
     </div>
 
@@ -100,7 +113,7 @@
       <div id="kritik-form">
         <div class="form-group"><label>Nama Lengkap (Opsional)</label><input type="text" id="nama-input" class="form-control"></div>
         <div class="form-group"><label>No HP / WhatsApp (Opsional)</label><input type="text" id="no-hp-input" class="form-control"></div>
-        <div class="form-group"><label>Pesan / Kritik & Saran (Wajib Diisi)</label><textarea id="pesan-input" class="form-control" rows="4"></textarea></div>
+        <div class="form-group"><label>Pesan / Kritik & Saran (Wajib Diisi)</label><textarea id="pesan-input" class="form-control" rows="3"></textarea></div>
         <div id="form-error" class="alert alert-error hidden"></div>
         <button id="btn-send-kritik" class="btn-full btn-primary" onclick="sendKritikPesan()">Kirim Pesan 🚀</button>
       </div>
@@ -175,7 +188,7 @@
       html += `</div>`;
 
       if (sheetItems.length > 1) {
-        html += `<div style="text-align: center; font-size: 11px; color: #333; margin-top: -6px; margin-bottom: 8px;">Informasi ${currentInfoIndex + 1} dari ${sheetItems.length}</div>`;
+        html += `<div style="text-align: center; font-size: 11px; color: #222; margin-top: -4px; margin-bottom: 6px;">Informasi ${currentInfoIndex + 1} dari ${sheetItems.length}</div>`;
       }
 
       container.innerHTML = html;
@@ -214,16 +227,16 @@
       }
       cbHistory.unshift(`Tebakan <strong>${val}</strong> ➔ 🎯 Tepat Posisi: <strong>${bulls}</strong> | 🟡 Benar Posisi Salah: <strong>${cows}</strong>`);
       
-      let historyHtml = `<h3>📋 Riwayat Analisis Logika:</h3><ul style="padding-left: 20px; margin-top: 8px;">`;
-      cbHistory.forEach(h => historyHtml += `<li style="margin-bottom: 4px;">${h}</li>`);
+      let historyHtml = `<h3>📋 Riwayat Analisis Logika:</h3><ul style="padding-left: 18px; margin-top: 6px; font-size: 13.5px;">`;
+      cbHistory.forEach(h => historyHtml += `<li style="margin-bottom: 3px;">${h}</li>`);
       document.getElementById('cb-history-area').innerHTML = historyHtml + `</ul>`;
 
       if (bulls === 3) {
         cbWin = true;
         document.getElementById('cb-input-area').classList.add('hidden');
         document.getElementById('cb-result-area').innerHTML = `
-          <div class="alert alert-success" style="margin-top: 15px;">🎉 <strong>LUAR BIASA! Kamu Berhasil Memecahkan Kode!</strong> Angka rahasianya adalah <strong>${cbSecret}</strong>.</div>
-          <div class="alert alert-info" style="margin-top: 8px;">Berhasil dipecahkan dalam ${cbAttempts} kali percobaan.</div>
+          <div class="alert alert-success" style="margin-top: 12px;">🎉 <strong>LUAR BIASA! Kamu Berhasil Memecahkan Kode!</strong> Angka rahasianya adalah <strong>${cbSecret}</strong>.</div>
+          <div class="alert alert-info" style="margin-top: 6px;">Berhasil dipecahkan dalam ${cbAttempts} kali percobaan.</div>
           <button class="btn-full btn-primary" onclick="initGame()">🔄 Reset / Kode Baru</button>`;
       }
       document.getElementById('guess-input').value = "";
