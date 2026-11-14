@@ -1,7 +1,8 @@
 // =========================================
 // KONFIGURASI GOOGLE SHEETS (Ganti dengan URL Web App Anda)
 // =========================================
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzU6GCyzYczBHw6DhOf8zins2wZkAf9DS1spSn_iE-gwAk55gu_rHgCwmZPA99xBOYoyw/exec"; 
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbHzjo27PHzzm9cBuccsL9aA3ntF6xN1DMUVLYeMzkCXDvqf8JDBCKQl-sBQ_1CTG-3Q/exec"; 
+const GALLERY_SHEET_URL = "https://script.google.com/macros/s/AKfycbzbHzjo27PHzzm9cBuccsL9aA3ntF6xN1DMUVLYeMzkCXDvqf8JDBCKQl-sBQ_1CTG-3Q/exec"; // Bisa menggunakan URL Web App yang sama jika digabung dalam 1 project Apps Script
 
 // =========================================
 // 1. MENU MOBILE TOGGLE
@@ -40,30 +41,75 @@ window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
 
 // =========================================
-// 3. FILTER GALERI KEGIATAN
+// 3. AMBIL DATA GALERI DARI GOOGLE SHEETS
 // =========================================
-const filterBtns = document.querySelectorAll('.filter-btn');
-const galleryItems = document.querySelectorAll('.gallery-item');
+async function loadDynamicGallery() {
+    const galleryGrid = document.getElementById('galleryGrid');
+    if (!galleryGrid) return;
 
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    try {
+        const response = await fetch(GALLERY_SHEET_URL);
+        const data = await response.json();
 
-        const filterValue = btn.getAttribute('data-filter');
+        if (data && data.length > 0) {
+            galleryGrid.innerHTML = ""; // Kosongkan placeholder teks memuat
+            
+            data.forEach(item => {
+                const title = item.Judul || "Kegiatan MPK";
+                const date = item.Tanggal || "-";
+                const category = item.Kategori || "forum";
+                const desc = item.Deskripsi || "";
+                const img = item.LinkGambar || "LOGO MPK.png";
 
-        galleryItems.forEach(item => {
-            if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
+                const tagLabel = category === 'sidang' ? 'Sidang & Rapat' : 'Dokumentasi Kegiatan';
+
+                const galleryItemHTML = `
+                    <div class="gallery-item reveal active" data-category="${category}" onclick="openModal('${title}', '${date}', '${desc}', '${img}')">
+                        <img src="${img}" alt="${title}">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">${tagLabel}</span>
+                            <h4>${title}</h4>
+                            <p><i class="fa-regular fa-calendar"></i> ${date}</p>
+                        </div>
+                    </div>
+                `;
+                galleryGrid.insertAdjacentHTML('beforeend', galleryItemHTML);
+            });
+            setupGalleryFilter(); // Pasang event filter setelah elemen galeri termuat
+        }
+    } catch (error) {
+        console.error("Gagal memuat galeri dari Google Sheets:", error);
+        galleryGrid.innerHTML = `<p style="text-align: center; color: #dc2626; grid-column: 1/-1;">Gagal memuat galeri. Periksa kembali URL Google Script Anda.</p>`;
+    }
+}
+
+// =========================================
+// 4. FILTER GALERI KEGIATAN
+// =========================================
+function setupGalleryFilter() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            galleryItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
         });
     });
-});
+}
 
 // =========================================
-// 4. MODAL DETAIL FOTO GALERI
+// 5. MODAL DETAIL FOTO GALERI
 // =========================================
 const photoModal = document.getElementById('photoModal');
 const modalImg = document.getElementById('modalImg');
@@ -90,7 +136,7 @@ function closeModal(event) {
 }
 
 // =========================================
-// 5. MINI GAME ASAH OTAK (LOGIKA & MPK)
+// 6. MINI GAME ASAH OTAK (LOGIKA & MPK)
 // =========================================
 const quizData = [
     {
@@ -162,7 +208,6 @@ function selectAnswer(selectedIndex, buttonElement) {
     const q = quizData[currentQuestionIndex];
     const allButtons = optionsArea.querySelectorAll('.game-option-btn');
 
-    // Nonaktifkan semua tombol setelah dipilih
     allButtons.forEach(btn => btn.disabled = true);
 
     if (selectedIndex === q.correct) {
@@ -193,13 +238,12 @@ function restartGame() {
     loadQuestion();
 }
 
-// Inisialisasi game saat halaman dimuat
 if (questionArea && optionsArea) {
     loadQuestion();
 }
 
 // =========================================
-// 6. FORM ASPIRASI & KIRIM KE GOOGLE SHEETS (PRIVAT)
+// 7. FORM ASPIRASI & KIRIM KE GOOGLE SHEETS
 // =========================================
 const anonToggle = document.getElementById('anonToggle');
 const identityFields = document.getElementById('identityFields');
@@ -281,3 +325,8 @@ if (aspirasiForm) {
         }
     });
 }
+
+// Inisialisasi galeri saat halaman dimuat
+window.addEventListener('load', () => {
+    loadDynamicGallery();
+});
