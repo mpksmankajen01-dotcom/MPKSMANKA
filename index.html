@@ -114,7 +114,7 @@
                 <div class="pillar-card reveal">
                     <div class="pillar-icon"><i class="fa-solid fa-bullhorn"></i></div>
                     <h3>Fungsi Aspirasi</h3>
-                    <p>Menampung, menyaring, and menyalurkan seluruh ide, kritik, saran, maupun curhatan siswa secara aman ke pihak sekolah.</p>
+                    <p>Menampung, menyaring, dan menyalurkan seluruh ide, kritik, saran, maupun curhatan siswa secara aman ke pihak sekolah.</p>
                 </div>
                 <div class="pillar-card featured reveal">
                     <div class="gold-ribbon">Pilar Utama</div>
@@ -131,7 +131,7 @@
         </div>
     </section>
 
-    <!-- GALERI FOTO KEGIATAN -->
+    <!-- GALERI FOTO KEGIATAN (DINAMIS DARI GOOGLE SHEETS) -->
     <section id="galeri" class="section bg-soft-blue">
         <div class="container">
             <div class="section-header reveal">
@@ -142,46 +142,13 @@
 
             <div class="filter-buttons reveal">
                 <button class="filter-btn active" data-filter="all">Semua Kegiatan</button>
-                <button class="filter-btn" data-filter="sidang">Sidang &amp; Rapat</button>
+                <button class="filter-btn" data-filter="sidang">Sidang dan Rapat</button>
                 <button class="filter-btn" data-filter="forum">Dokumentasi Kegiatan</button>
             </div>
 
+            <!-- Konten galeri akan dimuat otomatis oleh JavaScript dari Google Sheets -->
             <div class="gallery-grid" id="galleryGrid">
-                <div class="gallery-item reveal" data-category="sidang" onclick="openModal('Sidang Pleno Awal Tahun', '12 Agustus 2026', 'Penetapan program kerja dan AD/ART bersama seluruh perwakilan ketua kelas.', 'IMAGE/AKT.jpeg')">
-                    <img src="https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?auto=format&fit=crop&w=800&q=80" alt="Sidang Pleno MPK">
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Sidang &amp; Rapat</span>
-                        <h4>Sidang Pleno Awal Tahun</h4>
-                        <p><i class="fa-regular fa-calendar"></i> 12 Agustus 2026</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item reveal" data-category="forum" onclick="openModal('Forum Aspirasi Terbuka', '24 September 2026', 'Sesi diskusi santai dan dengar pendapat langsung dari siswa mengenai fasilitas sekolah.', 'IMAGE/KETUA.jpeg')">
-                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80" alt="Forum Siswa">
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Dokumentasi Kegiatan</span>
-                        <h4>Forum Aspirasi Terbuka</h4>
-                        <p><i class="fa-regular fa-calendar"></i> 24 September 2026</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item reveal" data-category="sidang" onclick="openModal('Rapat Evaluasi Kinerja OSIS', '15 Oktober 2026', 'Evaluasi tengah semester terhadap program kerja yang telah dijalankan oleh pengurus OSIS.', 'IMAGE/SELEKSI.jpeg')">
-                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80" alt="Rapat Evaluasi">
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Sidang &amp; Rapat</span>
-                        <h4>Rapat Evaluasi Kinerja OSIS</h4>
-                        <p><i class="fa-regular fa-calendar"></i> 15 Oktober 2026</p>
-                    </div>
-                </div>
-
-                <div class="gallery-item reveal" data-category="forum" onclick="openModal('Serah Terima Jabatan', '28 September 2026', 'Serah terima jabatan dari 24/25 ke 25/26.', 'SERTIJAB.jpeg')">
-                    <img src="SERTIJAB.jpeg" alt="LDK MPK">
-                    <div class="gallery-overlay">
-                        <span class="gallery-tag">Dokumentasi Kegiatan</span>
-                        <h4>Serah Terima Jabatan</h4>
-                        <p><i class="fa-regular fa-calendar"></i> 28 September 2026</p>
-                    </div>
-                </div>
+                <p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Memuat galeri dari database...</p>
             </div>
         </div>
     </section>
@@ -201,22 +168,15 @@
                         <div class="game-score-badge"><i class="fa-solid fa-trophy text-gold"></i> Skor: <span id="currentScore">0</span></div>
                         <div class="game-level-badge" id="questionCounter">Soal 1 dari 4</div>
                     </div>
-
-                    <div id="gameQuestionArea" class="game-question-area">
-                        <!-- Pertanyaan game akan dimuat secara dinamis oleh JavaScript -->
-                    </div>
-
-                    <div id="gameOptionsArea" class="game-options-grid">
-                        <!-- Pilihan jawaban -->
-                    </div>
-
+                    <div id="gameQuestionArea" class="game-question-area"></div>
+                    <div id="gameOptionsArea" class="game-options-grid"></div>
                     <div id="gameFeedback" class="game-feedback hidden"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- RUANG ASPIRASI & CURHAT (PRIVAT / LANGSUNG KE SHEETS) -->
+    <!-- RUANG ASPIRASI & CURHAT -->
     <section id="aspirasi" class="section bg-soft-blue">
         <div class="container">
             <div class="section-header reveal">
