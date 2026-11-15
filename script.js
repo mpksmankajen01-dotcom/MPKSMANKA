@@ -333,7 +333,7 @@ if (aspirasiForm) {
 
         if (submitBtn) {
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim Rahasia...';
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim Pesan...';
         }
 
         const formData = new URLSearchParams();
@@ -370,7 +370,7 @@ if (aspirasiForm) {
         }
         if (submitBtn) {
             submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pesan Secara Rahasia';
+            submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Pesan';
         }
 
         if (formStatus) {
