@@ -2,7 +2,7 @@
 // KONFIGURASI GOOGLE SHEETS (Ganti dengan URL Web App Anda)
 // =========================================
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbHzjo27PHzzm9cBuccsL9aA3ntF6xN1DMUVLYeMzkCXDvqf8JDBCKQl-sBQ_1CTG-3Q/exec"; 
-const GALLERY_SHEET_URL = "https://script.google.com/macros/s/AKfycbzbHzjo27PHzzm9cBuccsL9aA3ntF6xN1DMUVLYeMzkCXDvqf8JDBCKQl-sBQ_1CTG-3Q/exec"; // Bisa menggunakan URL Web App yang sama jika digabung dalam 1 project Apps Script
+const GALLERY_SHEET_URL = "https://script.google.com/macros/s/AKfycbzbHzjo27PHzzm9cBuccsL9aA3ntF6xN1DMUVLYeMzkCXDvqf8JDBCKQl-sBQ_1CTG-3Q/exec"; 
 
 // =========================================
 // 1. MENU MOBILE TOGGLE
@@ -52,7 +52,7 @@ async function loadDynamicGallery() {
         const data = await response.json();
 
         if (data && data.length > 0) {
-            galleryGrid.innerHTML = ""; // Kosongkan placeholder teks memuat
+            galleryGrid.innerHTML = ""; 
             
             data.forEach(item => {
                 const title = item.Judul || "Kegiatan MPK";
@@ -75,11 +75,11 @@ async function loadDynamicGallery() {
                 `;
                 galleryGrid.insertAdjacentHTML('beforeend', galleryItemHTML);
             });
-            setupGalleryFilter(); // Pasang event filter setelah elemen galeri termuat
+            setupGalleryFilter();
         }
     } catch (error) {
-        console.error("Gagal memuat galeri dari Google Sheets:", error);
-        galleryGrid.innerHTML = `<p style="text-align: center; color: #dc2626; grid-column: 1/-1;">Gagal memuat galeri. Periksa kembali URL Google Script Anda.</p>`;
+        console.error("Gagal memuat galeri:", error);
+        galleryGrid.innerHTML = `<p style="text-align: center; color: #dc2626; grid-column: 1/-1;">Gagal memuat galeri dari Google Sheets.</p>`;
     }
 }
 
@@ -136,111 +136,164 @@ function closeModal(event) {
 }
 
 // =========================================
-// 6. MINI GAME ASAH OTAK (LOGIKA & MPK)
+// 6. MINI GAME SPEED MATH (30 DETIK & LEADERBOARD)
 // =========================================
-const quizData = [
-    {
-        question: "Apa fungsi utama dari Majelis Permusyawaratan Kelas (MPK)?",
-        options: [
-            "Menyelenggarakan pentas seni sekolah",
-            "Menampung aspirasi dan mengawasi OSIS",
-            "Mengurus administrasi pembayaran SPP",
-            "Mengajar di kelas saat guru berhalangan"
-        ],
-        correct: 1
-    },
-    {
-        question: "Jika dalam suatu diskusi kelompok semua anggota setuju tetapi ada 1 orang bingung, sikap pemimpin yang bijak adalah...",
-        options: [
-            "Mengabaikannya agar cepat selesai",
-            "Mendengarkan kendalanya dan memberi penjelasan ulang",
-            "Memarahi orang tersebut",
-            "Mengeluarkan anggota dari kelompok"
-        ],
-        correct: 1
-    },
-    {
-        question: "Berapakah jumlah bintang emas utama yang berada di bagian atas Logo Resmi MPK SMANKA?",
-        options: ["1 Bintang", "3 Bintang", "5 Bintang", "7 Bintang"],
-        correct: 1
-    },
-    {
-        question: "Logika Berpikir: Jika kemarin adalah hari sebelum hari Rabu, hari apakah besok?",
-        options: ["Selasa", "Rabu", "Kamis", "Jumat"],
-        correct: 2
-    }
-];
-
-let currentQuestionIndex = 0;
 let score = 0;
+let timeLeft = 30;
+let timerInterval = null;
+let currentCorrectAnswer = 0;
 
+const gameStartScreen = document.getElementById('gameStartScreen');
+const gamePlayArea = document.getElementById('gamePlayArea');
+const gameOverArea = document.getElementById('gameOverArea');
 const questionArea = document.getElementById('gameQuestionArea');
 const optionsArea = document.getElementById('gameOptionsArea');
 const currentScoreEl = document.getElementById('currentScore');
-const questionCounterEl = document.getElementById('questionCounter');
-const gameFeedbackEl = document.getElementById('gameFeedback');
+const timeLeftEl = document.getElementById('timeLeft');
+const finalScoreEl = document.getElementById('finalScore');
+const playerNameInput = document.getElementById('playerName');
+const leaderboardList = document.getElementById('leaderboardList');
 
-function loadQuestion() {
-    if (currentQuestionIndex >= quizData.length) {
-        questionArea.innerHTML = `<h3>🎉 Luar Biasa! Kamu Menyelesaikan Mini Game Ini!</h3><p style="text-align:center; color:var(--text-muted); margin-bottom:15px;">Skor Akhir Kamu: <strong>${score} dari ${quizData.length * 25}</strong></p>`;
-        optionsArea.innerHTML = `<button class="btn-submit" onclick="restartGame()"><i class="fa-solid fa-rotate-right"></i> Main Lagi</button>`;
-        gameFeedbackEl.classList.add('hidden');
+function startGame() {
+    score = 0;
+    timeLeft = 30;
+    if (currentScoreEl) currentScoreEl.textContent = score;
+    if (timeLeftEl) timeLeftEl.textContent = timeLeft;
+
+    if (gameStartScreen) gameStartScreen.classList.add('hidden');
+    if (gameOverArea) gameOverArea.classList.add('hidden');
+    if (gamePlayArea) gamePlayArea.classList.remove('hidden');
+
+    generateMathQuestion();
+
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        if (timeLeftEl) timeLeftEl.textContent = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            endGame();
+        }
+    }, 1000);
+}
+
+function generateMathQuestion() {
+    const ops = ['+', '-', '×', '÷'];
+    const op = ops[Math.floor(Math.random() * ops.length)];
+    let num1, num2, answer;
+
+    if (op === '+') {
+        num1 = Math.floor(Math.random() * 40) + 1;
+        num2 = Math.floor(Math.random() * 40) + 1;
+        answer = num1 + num2;
+    } else if (op === '-') {
+        num1 = Math.floor(Math.random() * 40) + 1;
+        num2 = Math.floor(Math.random() * 40) + 1;
+        if (num1 < num2) { let temp = num1; num1 = num2; num2 = temp; }
+        answer = num1 - num2;
+    } else if (op === '×') {
+        num1 = Math.floor(Math.random() * 10) + 1;
+        num2 = Math.floor(Math.random() * 10) + 1;
+        answer = num1 * num2;
+    } else {
+        num2 = Math.floor(Math.random() * 9) + 1;
+        let multiplier = Math.floor(Math.random() * 9) + 1;
+        num1 = num2 * multiplier;
+        answer = multiplier;
+    }
+
+    currentCorrectAnswer = answer;
+    if (questionArea) questionArea.textContent = `${num1} ${op} ${num2} = ?`;
+
+    let options = [answer];
+    while (options.length < 4) {
+        let wrongAnswer = answer + (Math.floor(Math.random() * 10) - 5);
+        if (wrongAnswer !== answer && !options.includes(wrongAnswer) && wrongAnswer >= 0) {
+            options.push(wrongAnswer);
+        }
+    }
+    options.sort(() => Math.random() - 0.5);
+
+    if (optionsArea) {
+        optionsArea.innerHTML = "";
+        options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'game-option-btn';
+            btn.textContent = opt;
+            btn.onclick = () => checkMathAnswer(opt, btn);
+            optionsArea.appendChild(btn);
+        });
+    }
+}
+
+function checkMathAnswer(selectedOption, buttonElement) {
+    const allButtons = optionsArea.querySelectorAll('.game-option-btn');
+    allButtons.forEach(btn => btn.disabled = true);
+
+    if (selectedOption === currentCorrectAnswer) {
+        buttonElement.classList.add('correct');
+        score++;
+        if (currentScoreEl) currentScoreEl.textContent = score;
+    } else {
+        buttonElement.classList.add('wrong');
+        allButtons.forEach(btn => {
+            if (parseInt(btn.textContent) === currentCorrectAnswer) {
+                btn.classList.add('correct');
+            }
+        });
+    }
+
+    setTimeout(() => {
+        if (timeLeft > 0) {
+            generateMathQuestion();
+        }
+    }, 350);
+}
+
+function endGame() {
+    if (gamePlayArea) gamePlayArea.classList.add('hidden');
+    if (gameOverArea) gameOverArea.classList.remove('hidden');
+    if (finalScoreEl) finalScoreEl.textContent = score;
+    displayLeaderboard();
+}
+
+function saveScore() {
+    const name = playerNameInput ? playerNameInput.value.trim() : "";
+    if (!name) {
+        alert("Silakan masukkan nama kamu terlebih dahulu!");
         return;
     }
 
-    const q = quizData[currentQuestionIndex];
-    questionCounterEl.textContent = `Soal ${currentQuestionIndex + 1} dari ${quizData.length}`;
-    currentScoreEl.textContent = score;
+    let leaderboard = JSON.parse(localStorage.getItem('mpk_math_leaderboard')) || [];
+    leaderboard.push({ name: name, score: score });
+    leaderboard.sort((a, b) => b.score - a.score);
+    leaderboard = leaderboard.slice(0, 5);
 
-    questionArea.innerHTML = `<h3>${q.question}</h3>`;
-    optionsArea.innerHTML = "";
+    localStorage.setItem('mpk_math_leaderboard', JSON.stringify(leaderboard));
+    displayLeaderboard();
+    if (playerNameInput) playerNameInput.value = "";
+    alert("Skor berhasil disimpan ke papan rangking!");
+}
 
-    q.options.forEach((opt, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'game-option-btn';
-        btn.textContent = opt;
-        btn.onclick = () => selectAnswer(index, btn);
-        optionsArea.appendChild(btn);
+function displayLeaderboard() {
+    if (!leaderboardList) return;
+    let leaderboard = JSON.parse(localStorage.getItem('mpk_math_leaderboard')) || [];
+    
+    if (leaderboard.length === 0) {
+        leaderboardList.innerHTML = `<li style="color: var(--text-muted); padding: 5px 0;">Belum ada skor tercatat. Jadilah yang pertama!</li>`;
+        return;
+    }
+
+    leaderboardList.innerHTML = "";
+    leaderboard.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.style.cssText = "display: flex; justify-content: space-between; padding: 6px 10px; margin-bottom: 6px; background: var(--sky-50); border-radius: 8px; border: 1px solid var(--sky-200); font-weight: 600;";
+        li.innerHTML = `<span>#${index + 1} ${item.name}</span> <span class="text-blue">${item.score} Soal Benar</span>`;
+        leaderboardList.appendChild(li);
     });
 }
 
-function selectAnswer(selectedIndex, buttonElement) {
-    const q = quizData[currentQuestionIndex];
-    const allButtons = optionsArea.querySelectorAll('.game-option-btn');
-
-    allButtons.forEach(btn => btn.disabled = true);
-
-    if (selectedIndex === q.correct) {
-        buttonElement.classList.add('correct');
-        score += 25;
-        currentScoreEl.textContent = score;
-        gameFeedbackEl.textContent = "✓ Jawaban Benar! Hebat sekali logika berfikirmu!";
-        gameFeedbackEl.className = "game-feedback success";
-    } else {
-        buttonElement.classList.add('wrong');
-        allButtons[q.correct].classList.add('correct');
-        gameFeedbackEl.textContent = "✗ Kurang tepat. Tetap semangat!";
-        gameFeedbackEl.className = "game-feedback info";
-    }
-
-    gameFeedbackEl.classList.remove('hidden');
-
-    setTimeout(() => {
-        currentQuestionIndex++;
-        gameFeedbackEl.classList.add('hidden');
-        loadQuestion();
-    }, 1800);
-}
-
-function restartGame() {
-    currentQuestionIndex = 0;
-    score = 0;
-    loadQuestion();
-}
-
-if (questionArea && optionsArea) {
-    loadQuestion();
-}
+displayLeaderboard();
 
 // =========================================
 // 7. FORM ASPIRASI & KIRIM KE GOOGLE SHEETS
