@@ -29,7 +29,7 @@
                 <li><a href="#beranda">Beranda</a></li>
                 <li><a href="#tentang">Tentang MPK</a></li>
                 <li><a href="#galeri">Galeri</a></li>
-                <li><a href="#minigame">Mini Game</a></li>
+                <li><a href="#minigame">Speed Math</a></li>
                 <li><a href="#aspirasi" class="btn-nav">Ruang Curhat</a></li>
             </ul>
             <button class="menu-toggle" id="menuToggle" aria-label="Buka Menu">
@@ -53,7 +53,7 @@
                     <a href="#aspirasi" class="btn-primary">
                         <i class="fa-solid fa-paper-plane"></i> Kirim Aspirasi / Curhat
                     </a>
-                    <a href="#minigame" class="btn-outline">Main Mini Game</a>
+                    <a href="#minigame" class="btn-outline">Main Speed Math</a>
                 </div>
             </div>
             <div class="hero-visual reveal">
@@ -102,7 +102,7 @@
                 <div class="about-text">
                     <span class="section-subtitle">Pengenalan Singkat</span>
                     <h2>Apa Itu <span class="text-blue">MPK SMANKA</span>?</h2>
-                    <p><strong>Majelis Permusyawaratan Kelas (MPK) SMANKA</strong> adalah badan legislatif tertinggi di tingkat siswa yang bertugas menampung aspirasi seluruh kelas, menyusun aturan organisasi (AD/ART), serta mengawasi kinerja OSIS.</p>
+                    <p><strong>Majelis Permusyawaratan Kelas (MPK) SMANKA</strong> adalah badan legislatif tingkat siswa yang bertugas menampung aspirasi seluruh kelas, menyusun aturan organisasi (AD/ART), serta mengawasi kinerja OSIS.</p>
                     <div class="logo-meaning-tags">
                         <span><i class="fa-solid fa-shield-halved text-blue"></i> Integritas &amp; Pengawasan</span>
                         <span><i class="fa-solid fa-star text-gold"></i> Aspirasi Siswa</span>
@@ -142,35 +142,59 @@
 
             <div class="filter-buttons reveal">
                 <button class="filter-btn active" data-filter="all">Semua Kegiatan</button>
-                <button class="filter-btn" data-filter="Sidang dan Rapat">Sidang dan Rapat</button>
+                <button class="filter-btn" data-filter="Sidang dan Rapat">Sidang &amp; Rapat</button>
                 <button class="filter-btn" data-filter="Dokumentasi Kegiatan">Dokumentasi Kegiatan</button>
             </div>
 
-            <!-- Konten galeri akan dimuat otomatis oleh JavaScript dari Google Sheets -->
             <div class="gallery-grid" id="galleryGrid">
-                <p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Memuat galeri dari database...</p>
+                <p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Memuat galeri dari Google Sheets...</p>
             </div>
         </div>
     </section>
 
-    <!-- MINI GAME ASAH OTAK -->
+    <!-- MINI GAME SPEED MATH (30 DETIK & LEADERBOARD) -->
     <section id="minigame" class="section bg-white">
         <div class="container">
             <div class="section-header reveal">
-                <span class="section-subtitle">Asah Otak &amp; Hiburan</span>
-                <h2>Teka-Teki <span class="text-blue">Logika MPK</span></h2>
-                <p>Uji ketajaman logika, wawasan kepemimpinan, dan konsentrasi kamu sambil bersantai!</p>
+                <span class="section-subtitle">Tantangan Kecepatan &amp; Hitung</span>
+                <h2>Speed Math <span class="text-blue">30 Detik</span></h2>
+                <p>Jawab soal operasi bilangan matematika sebanyak mungkin dalam waktu 30 detik dan raih posisi teratas di papan rangking!</p>
             </div>
 
             <div class="game-container reveal">
                 <div class="game-card-box">
                     <div class="game-top-bar">
                         <div class="game-score-badge"><i class="fa-solid fa-trophy text-gold"></i> Skor: <span id="currentScore">0</span></div>
-                        <div class="game-level-badge" id="questionCounter">Soal 1 dari 4</div>
+                        <div class="game-timer-badge" id="gameTimer"><i class="fa-solid fa-clock text-blue"></i> Waktu: <span id="timeLeft">30</span>s</div>
                     </div>
-                    <div id="gameQuestionArea" class="game-question-area"></div>
-                    <div id="gameOptionsArea" class="game-options-grid"></div>
-                    <div id="gameFeedback" class="game-feedback hidden"></div>
+
+                    <div id="gameStartScreen" style="text-align: center; padding: 20px;">
+                        <h3 style="margin-bottom: 15px; color: var(--logo-blue-dark);">Siap Menguji Kecepatan Hitungmu?</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 20px;">Kamu punya waktu 30 detik untuk menjawab soal penjumlahan (+), pengurangan (-), perkalian (×), dan pembagian (÷).</p>
+                        <button class="btn-primary" onclick="startGame()"><i class="fa-solid fa-play"></i> Mulai Game Sekarang</button>
+                    </div>
+
+                    <div id="gamePlayArea" class="hidden">
+                        <div id="gameQuestionArea" style="font-size: 2.2rem; font-weight: 800; color: var(--logo-blue-dark); margin-bottom: 20px; text-align: center;"></div>
+                        <div id="gameOptionsArea" class="game-options-grid"></div>
+                    </div>
+
+                    <div id="gameOverArea" class="hidden" style="text-align: center; padding: 10px;">
+                        <h3 style="color: var(--logo-blue-dark); margin-bottom: 8px;">⏰ Waktu Habis!</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 15px;">Total Soal Dijawab Benar: <strong id="finalScore" style="color: var(--logo-blue); font-size: 1.2rem;">0</strong></p>
+                        
+                        <div class="form-group" style="max-width: 300px; margin: 0 auto 15px; text-align: left;">
+                            <label for="playerName" style="font-size: 0.85rem; margin-bottom: 4px;">Nama Kamu:</label>
+                            <input type="text" id="playerName" placeholder="Contoh: Budi (XI IPA)" maxlength="20">
+                        </div>
+                        <button class="btn-submit" onclick="saveScore()"><i class="fa-solid fa-floppy-disk"></i> Simpan Skor ke Papan Rangking</button>
+                        
+                        <div style="margin-top: 25px; text-align: left;">
+                            <h4 style="color: var(--logo-blue-dark); margin-bottom: 10px; font-size: 1rem;"><i class="fa-solid fa-ranking-star text-gold"></i> Papan Rangking (Top Skor)</h4>
+                            <ul id="leaderboardList" style="list-style: none; padding: 0; font-size: 0.9rem;"></ul>
+                        </div>
+                        <button class="btn-outline" style="margin-top: 15px; width: 100%;" onclick="startGame()"><i class="fa-solid fa-rotate-right"></i> Main Lagi</button>
+                    </div>
                 </div>
             </div>
         </div>
