@@ -41,6 +41,7 @@ body {
 
 .text-gold { color: var(--logo-gold-dark); }
 .text-blue { color: var(--logo-blue); }
+.hidden { display: none !important; }
 
 /* =========================================
    NAVBAR
@@ -211,6 +212,8 @@ body {
     font-weight: 700;
     box-shadow: 0 10px 25px rgba(27, 107, 179, 0.28);
     transition: all 0.3s;
+    border: none;
+    cursor: pointer;
 }
 
 .btn-primary:hover {
@@ -227,6 +230,7 @@ body {
     text-decoration: none;
     font-weight: 700;
     transition: all 0.3s;
+    cursor: pointer;
 }
 
 .btn-outline:hover { background: var(--gold-soft); }
@@ -477,7 +481,7 @@ body {
 .pillar-card h3 { color: var(--logo-blue-dark); margin-bottom: 10px; }
 
 /* =========================================
-   GALERI KEGIATAN
+   GALERI KEGIATAN & FILTER (RESPONSIF)
 ========================================= */
 .filter-buttons {
     display: flex;
@@ -485,7 +489,12 @@ body {
     gap: 12px;
     margin-bottom: 35px;
     flex-wrap: wrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 6px;
+    scrollbar-width: none;
 }
+.filter-buttons::-webkit-scrollbar { display: none; }
 
 .filter-btn {
     padding: 10px 22px;
@@ -496,6 +505,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
+    flex-shrink: 0;
 }
 
 .filter-btn.active, .filter-btn:hover {
@@ -554,7 +564,7 @@ body {
 .gallery-overlay p { font-size: 0.82rem; color: var(--sky-200); }
 
 /* =========================================
-   MINI GAME STYLING
+   MINI GAME SPEED MATH STYLING
 ========================================= */
 .game-container {
     max-width: 750px;
@@ -578,7 +588,7 @@ body {
     border-bottom: 1.5px solid var(--sky-200);
 }
 
-.game-score-badge, .game-level-badge {
+.game-score-badge, .game-timer-badge {
     background: var(--white);
     padding: 8px 18px;
     border-radius: 50px;
@@ -587,14 +597,6 @@ body {
     color: var(--logo-blue-dark);
     border: 1.5px solid var(--sky-200);
     box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-}
-
-.game-question-area h3 {
-    font-size: 1.35rem;
-    color: var(--logo-blue-dark);
-    margin-bottom: 25px;
-    text-align: center;
-    line-height: 1.4;
 }
 
 .game-options-grid {
@@ -609,11 +611,11 @@ body {
     padding: 16px 20px;
     border-radius: 16px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.15rem;
     color: var(--logo-blue-dark);
     cursor: pointer;
-    transition: all 0.25s ease;
-    text-align: left;
+    transition: all 0.2s ease;
+    text-align: center;
 }
 
 .game-option-btn:hover {
@@ -626,39 +628,13 @@ body {
     background: #10b981 !important;
     color: white !important;
     border-color: #059669 !important;
-    animation: pulseAnim 0.4s ease;
 }
 
 .game-option-btn.wrong {
     background: #ef4444 !important;
     color: white !important;
     border-color: #dc2626 !important;
-    animation: shakeAnim 0.4s ease;
 }
-
-@keyframes pulseAnim {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.04); }
-    100% { transform: scale(1); }
-}
-
-@keyframes shakeAnim {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-6px); }
-    75% { transform: translateX(6px); }
-}
-
-.game-feedback {
-    margin-top: 25px;
-    padding: 16px;
-    border-radius: 14px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 1rem;
-}
-
-.game-feedback.success { background: #d1fae5; color: #065f46; border: 1px solid #10b981; }
-.game-feedback.info { background: var(--gold-soft); color: var(--logo-gold-dark); border: 1px solid var(--logo-gold); }
 
 /* =========================================
    RUANG ASPIRASI TERPUSAT (PRIVAT)
