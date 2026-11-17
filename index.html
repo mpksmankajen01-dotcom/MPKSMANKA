@@ -1,192 +1,210 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MPK SMANKA | Majelis Permusyawaratan Kelas</title>
-    <!-- Font & Icons -->
+    <title>MPK SMANKA — Majelis Permusyawaratan Kelas</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- CSS Terpisah -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- NAVBAR -->
-    <header class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="container nav-container">
-            <a href="#" class="brand">
-                <img src="LOGO MPK.png" alt="Logo MPK SMANKA" onerror="this.src='https://via.placeholder.com/45?text=MPK'">
-                <div class="brand-text">
-                    <h1>MPK SMANKA</h1>
-                    <span>Majelis Permusyawaratan Kelas</span>
+            <a href="#beranda" class="logo">
+                <img src="LOGO MPK.png" alt="Logo MPK SMANKA" class="nav-logo-img" onerror="this.src='IMAGE/LOGO MPK.png'">
+                <div class="logo-text">
+                    <span class="logo-title">MPK SMANKA</span>
+                    <span class="logo-sub">Majelis Permusyawaratan Kelas</span>
                 </div>
             </a>
-
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#tentang">Tentang MPK</a></li>
+                <li><a href="#galeri">Galeri</a></li>
+                <li><a href="#minigame">Speed Math</a></li>
+                <li><a href="#aspirasi" class="btn-nav">Ruang Curhat</a></li>
+            </ul>
             <button class="menu-toggle" id="menuToggle" aria-label="Buka Menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
-
-            <nav class="nav-links" id="navLinks">
-                <a href="#beranda">Beranda</a>
-                <a href="#tentang">Tentang MPK</a>
-                <a href="#galeri">Galeri</a>
-                <a href="#game">Speed Math</a>
-                <a href="#aspirasi" class="nav-cta">Kotak Aspirasi</a>
-            </nav>
         </div>
-    </header>
+    </nav>
 
     <!-- HERO SECTION -->
-    <section id="beranda" class="hero">
+    <header id="beranda" class="hero">
+        <div class="hero-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+        </div>
         <div class="container hero-grid">
             <div class="hero-content reveal">
-                <span class="badge"><i class="fa-solid fa-scale-balanced"></i> Legislatif & Pengawas Siswa</span>
-                <h2>Menjembatani Suara Siswa, Mewujudkan SMANKA Bermartabat</h2>
-                <p>Majelis Permusyawaratan Kelas (MPK) hadir sebagai wadah aspirasi, pengawasan kinerja OSIS, serta perwakilan resmi seluruh siswa SMA Negeri 1.</p>
+                <span class="badge-gold"><i class="fa-solid fa-star"></i> MPK SMANKA • Periode 2026 / 2027</span>
+                <h1>Jembatan <span class="text-gold">Aspirasi</span> &amp; Ruang Dengar Siswa</h1>
+                <p>Majelis Permusyawaratan Kelas SMAN 1 Kajen hadir mengawal kebijakan sekolah, mengawasi kinerja organisasi, dan memastikan setiap suara siswa didengar secara aman dan rahasia.</p>
                 <div class="hero-buttons">
-                    <a href="#aspirasi" class="btn-primary"><i class="fa-solid fa-paper-plane"></i> Sampaikan Aspirasi</a>
-                    <a href="#galeri" class="btn-outline"><i class="fa-solid fa-images"></i> Lihat Dokumentasi</a>
+                    <a href="#aspirasi" class="btn-primary">
+                        <i class="fa-solid fa-paper-plane"></i> Kirim Aspirasi / Curhat
+                    </a>
+                    <a href="#minigame" class="btn-outline">Main Speed Math</a>
                 </div>
             </div>
             <div class="hero-visual reveal">
-                <div class="hero-card">
-                    <div class="card-icon"><i class="fa-solid fa-users-gear"></i></div>
-                    <h3>Fungsi Utama MPK</h3>
-                    <ul class="hero-list">
-                        <li><i class="fa-solid fa-circle-check"></i> Menampung & menyalurkan aspirasi siswa</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Mengawasi dan mengevaluasi program kerja OSIS</li>
-                        <li><i class="fa-solid fa-circle-check"></i> Menyelenggarakan Sidang Pleno & Musyawarah</li>
-                    </ul>
+                <div class="hero-card floating">
+                    <div class="card-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                        <span class="card-tag">Kotak Suara Rahasia 24/7</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="quote-box">
+                            <i class="fa-solid fa-quote-left quote-icon"></i>
+                            <p>"Privasi dan kenyamananmu adalah prioritas kami. Ceritakan uneg-unegmu tanpa takut identitasmu diketahui publik."</p>
+                        </div>
+                        <div class="stats-mini">
+                            <div class="stat-item">
+                                <strong>100%</strong>
+                                <span>Privasi Aman</span>
+                            </div>
+                            <div class="stat-divider"></div>
+                            <div class="stat-item">
+                                <strong>Direct</strong>
+                                <span>Terkirim ke Sheets</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wave-bottom">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- TENTANG & 3 PILAR -->
+    <section id="tentang" class="section bg-white">
+        <div class="container">
+            <div class="about-intro reveal">
+                <div class="about-logo-box">
+                    <div class="logo-glow"></div>
+                    <img src="LOGO MPK.png" alt="Logo Resmi MPK SMANKA" class="about-logo-img" onerror="this.src='IMAGE/LOGO MPK.png'">
+                </div>
+                <div class="about-text">
+                    <span class="section-subtitle">Pengenalan Singkat</span>
+                    <h2>Apa Itu <span class="text-blue">MPK SMANKA</span>?</h2>
+                    <p><strong>Majelis Permusyawaratan Kelas (MPK) SMANKA</strong> adalah badan legislatif tingkat siswa yang bertugas menampung aspirasi seluruh kelas, menyusun aturan organisasi (AD/ART), serta mengawasi kinerja OSIS.</p>
+                    <div class="logo-meaning-tags">
+                        <span><i class="fa-solid fa-shield-halved text-blue"></i> Integritas &amp; Pengawasan</span>
+                        <span><i class="fa-solid fa-star text-gold"></i> Aspirasi Siswa</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="pillar-card reveal">
+                    <div class="pillar-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                    <h3>Fungsi Aspirasi</h3>
+                    <p>Menampung, menyaring, dan menyalurkan seluruh ide, kritik, saran, maupun curhatan siswa secara aman ke pihak sekolah.</p>
+                </div>
+                <div class="pillar-card featured reveal">
+                    <div class="gold-ribbon">Pilar Utama</div>
+                    <div class="pillar-icon gold"><i class="fa-solid fa-eye"></i></div>
+                    <h3>Fungsi Pengawasan</h3>
+                    <p>Mengawasi dan mengevaluasi pelaksanaan program kerja OSIS agar berjalan sesuai kebutuhan seluruh siswa.</p>
+                </div>
+                <div class="pillar-card reveal">
+                    <div class="pillar-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <h3>Fungsi Legislasi</h3>
+                    <p>Merancang dan menetapkan aturan organisasi serta menyelenggarakan sidang pleno perwakilan kelas.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- TENTANG & TUGAS POKOK -->
-    <section id="tentang" class="section-padding">
+    <!-- GALERI FOTO KEGIATAN (DINAMIS DARI GOOGLE SHEETS) -->
+    <section id="galeri" class="section bg-soft-blue">
         <div class="container">
-            <div class="section-header text-center reveal">
-                <span class="badge">Profil Organisasi</span>
-                <h2>Tugas & Wewenang MPK</h2>
-                <p>Pilar demokrasi sekolah yang bekerja secara transparan, objektif, dan berintegritas.</p>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-card reveal">
-                    <div class="f-icon"><i class="fa-solid fa-bullhorn"></i></div>
-                    <h3>Legislasi & Aspirasi</h3>
-                    <p>Menyerap keluhan, saran, maupun ide kreatif dari setiap perwakilan kelas untuk dibahas bersama pihak sekolah.</p>
-                </div>
-                <div class="feature-card reveal">
-                    <div class="f-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
-                    <h3>Pengawasan (Controlling)</h3>
-                    <p>Memastikan seluruh program kerja OSIS berjalan sesuai anggaran dasar dan memberi dampak positif bagi siswa.</p>
-                </div>
-                <div class="feature-card reveal">
-                    <div class="f-icon"><i class="fa-solid fa-gavel"></i></div>
-                    <h3>Sidang & Evaluasi</h3>
-                    <p>Memimpin jalannya Rapat Pleno, Laporan Pertanggungjawaban (LPJ), serta pemilihan ketua OSIS yang demokratis.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- GALERI KEGIATAN DINAMIS -->
-    <section id="galeri" class="section-padding bg-light">
-        <div class="container">
-            <div class="section-header text-center reveal">
-                <span class="badge">Dokumentasi</span>
-                <h2>Galeri Kegiatan MPK</h2>
-                <p>Rekam jejak sidang, forum aspirasi, dan agenda pengawasan sekolah.</p>
+            <div class="section-header reveal">
+                <span class="section-subtitle">Dokumentasi</span>
+                <h2>Galeri Kegiatan <span class="text-gold">MPK</span></h2>
+                <p>Momen kebersamaan, sidang pleno, dan forum diskusi bersama perwakilan kelas.</p>
             </div>
 
             <div class="filter-buttons reveal">
-                <button class="filter-btn active" data-filter="all">Semua</button>
-                <button class="filter-btn" data-filter="Sidang dan Rapat">Sidang & Rapat</button>
-                <button class="filter-btn" data-filter="Kegiatan">Kegiatan</button>
+                <button class="filter-btn active" data-filter="all">Semua Kegiatan</button>
+                <button class="filter-btn" data-filter="Sidang dan Rapat">Sidang &amp; Rapat</button>
+                <button class="filter-btn" data-filter="Dokumentasi Kegiatan">Dokumentasi Kegiatan</button>
             </div>
 
             <div class="gallery-grid" id="galleryGrid">
-                <p style="text-align: center; color: #64748b; grid-column: 1/-1;">Memuat galeri kegiatan...</p>
+                <p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Memuat galeri dari Google Sheets...</p>
             </div>
         </div>
     </section>
 
-    <!-- MODAL PREVIEW FOTO -->
-    <div class="modal-overlay" id="photoModal" onclick="closeModal(event)">
-        <div class="modal-content">
-            <button class="modal-close" onclick="forceCloseModal()">&times;</button>
-            <img id="modalImg" src="" alt="Detail Foto">
-            <div class="modal-body">
-                <span id="modalDate" class="modal-date"></span>
-                <h3 id="modalTitle"></h3>
-                <p id="modalDesc"></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- MINI GAME SPEED MATH & LEADERBOARD BERDAMPINGAN -->
-    <section id="game" class="section-padding">
+    <!-- MINI GAME SPEED MATH (30 DETIK & LEADERBOARD BERDAMPINGAN) -->
+    <section id="minigame" class="section bg-white">
         <div class="container">
-            <div class="section-header text-center reveal">
-                <span class="badge">Hiburan & Edukasi</span>
-                <h2>Tantangan Speed Math 30 Detik</h2>
+            <div class="section-header reveal">
+                <span class="section-subtitle">Tantangan Kecepatan &amp; Hitung</span>
+                <h2>Speed Math <span class="text-blue">30 Detik</span></h2>
                 <p>Jawab soal operasi bilangan matematika sebanyak mungkin dalam waktu 30 detik dan raih posisi teratas di papan rangking!</p>
             </div>
 
-            <!-- WADAH DUA KOLOM (GAME DI KIRI, RANGKING SELALU TAMPIL DI KANAN) -->
+            <!-- WADAH DUA KOLOM (GAME DI KIRI, RANGKING DI KANAN DAN SELALU TAMPIL) -->
             <div class="game-layout-grid reveal">
                 
                 <!-- KOLOM 1: KOTAK PERMAINAN -->
-                <div class="game-box">
-                    <div class="game-stats">
-                        <div class="stat-pill"><i class="fa-solid fa-trophy text-gold"></i> Skor: <span id="currentScore">0</span></div>
-                        <div class="stat-pill"><i class="fa-solid fa-clock text-blue"></i> Waktu: <span id="timeLeft">30</span>s</div>
+                <div class="game-card-box">
+                    <div class="game-top-bar">
+                        <div class="game-score-badge"><i class="fa-solid fa-trophy text-gold"></i> Skor: <span id="currentScore">0</span></div>
+                        <div class="game-timer-badge" id="gameTimer"><i class="fa-solid fa-clock text-blue"></i> Waktu: <span id="timeLeft">30</span>s</div>
                     </div>
 
-                    <!-- Tampilan Awal Game -->
-                    <div id="gameStartScreen" class="game-screen">
-                        <h3>Siap Menguji Kecepatan Hitungmu?</h3>
-                        <p>Kamu punya waktu 30 detik untuk menjawab soal penjumlahan (+), pengurangan (-), perkalian (×), dan pembagian (÷).</p>
-                        <button class="btn-primary" onclick="startGame()">
-                            <i class="fa-solid fa-play"></i> Mulai Game Sekarang
-                        </button>
+                    <div id="gameStartScreen" style="text-align: center; padding: 15px 0;">
+                        <h3 style="margin-bottom: 12px; color: var(--logo-blue-dark);">Siap Menguji Kecepatan Hitungmu?</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem;">Kamu punya waktu 30 detik untuk menjawab soal penjumlahan (+), pengurangan (-), perkalian (×), dan pembagian (÷).</p>
+                        <button class="btn-primary" onclick="startGame()"><i class="fa-solid fa-play"></i> Mulai Game Sekarang</button>
                     </div>
 
-                    <!-- Area Bermain -->
-                    <div id="gamePlayArea" class="game-screen hidden">
-                        <div id="gameQuestionArea" class="math-question">12 + 8 = ?</div>
-                        <div id="gameOptionsArea" class="math-options-grid">
-                            <!-- Tombol pilihan ganda muncul otomatis dari JS -->
-                        </div>
+                    <div id="gamePlayArea" class="hidden">
+                        <div id="gameQuestionArea" style="font-size: 2.2rem; font-weight: 800; color: var(--logo-blue-dark); margin-bottom: 20px; text-align: center;"></div>
+                        <div id="gameOptionsArea" class="game-options-grid"></div>
                     </div>
 
-                    <!-- Tampilan Waktu Habis (Input Nama) -->
-                    <div id="gameOverArea" class="game-screen hidden">
-                        <h3>Waktu Habis! ⏰</h3>
-                        <p>Skor akhir kamu adalah: <strong id="finalScore" class="text-blue" style="font-size: 1.5rem;">0</strong></p>
+                    <div id="gameOverArea" class="hidden" style="text-align: center; padding: 5px 0;">
+                        <h3 style="color: var(--logo-blue-dark); margin-bottom: 6px;">⏰ Waktu Habis!</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 15px;">Total Soal Dijawab Benar: <strong id="finalScore" style="color: var(--logo-blue); font-size: 1.2rem;">0</strong></p>
                         
-                        <div class="save-score-form">
-                            <input type="text" id="playerName" placeholder="Masukkan nama / kelasmu..." maxlength="20">
-                            <button class="btn-primary" onclick="saveScore()">Simpan Skor</button>
+                        <div class="form-group" style="margin-bottom: 15px; text-align: left;">
+                            <label for="playerName" style="font-size: 0.85rem; margin-bottom: 4px;">Nama Kamu:</label>
+                            <input type="text" id="playerName" placeholder="Contoh: Budi (XI IPA)" maxlength="20">
                         </div>
-
-                        <button class="btn-outline" onclick="startGame()" style="margin-top: 15px;">
-                            <i class="fa-solid fa-rotate-right"></i> Main Lagi
-                        </button>
+                        <button class="btn-submit" onclick="saveScore()"><i class="fa-solid fa-floppy-disk"></i> Simpan Skor</button>
+                        
+                        <button class="btn-outline" style="margin-top: 15px; width: 100%; border-radius: 12px;" onclick="startGame()"><i class="fa-solid fa-rotate-right"></i> Main Lagi</button>
                     </div>
                 </div>
 
                 <!-- KOLOM 2: KOTAK PAPAN RANGKING (SELALU TAMPIL) -->
                 <div class="leaderboard-box">
                     <div class="leaderboard-header">
-                        <i class="fa-solid fa-crown text-gold"></i>
+                        <i class="fa-solid fa-crown text-gold" style="font-size: 1.2rem;"></i>
                         <h3>Top 5 Papan Rangking</h3>
                     </div>
                     <p class="leaderboard-subtitle">Skor tertinggi pemain di perangkat ini:</p>
-                    
                     <ul id="leaderboardList" class="leaderboard-list">
-                        <!-- Daftar Top 5 otomatis dimuat oleh script.js -->
+                        <!-- Otomatis diisi oleh JavaScript -->
                     </ul>
                 </div>
 
@@ -194,60 +212,61 @@
         </div>
     </section>
 
-    <!-- KOTAK ASPIRASI & CURHAT RAHASIA -->
-    <section id="aspirasi" class="section-padding bg-light">
+    <!-- RUANG ASPIRASI & CURHAT -->
+    <section id="aspirasi" class="section bg-soft-blue">
         <div class="container">
-            <div class="aspirasi-wrapper reveal">
-                <div class="aspirasi-info">
-                    <span class="badge">100% Terjamin Kerahasiaannya</span>
-                    <h2>Kotak Aspirasi & Curhat Siswa</h2>
-                    <p>Punya keluhan fasilitas kelas, masukan untuk acara OSIS, atau cerita yang ingin disampaikan secara aman? Tulis di sini. Identitasmu terlindungi sepenuhnya.</p>
-                    <div class="privacy-note">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <span>Mode Anonim aktif secara bawaan. Data langsung masuk ke database internal MPK.</span>
-                    </div>
+            <div class="section-header reveal">
+                <span class="section-subtitle">Kotak Suara Aman</span>
+                <h2>Kirim Aspirasi &amp; <span class="text-blue">Ruang Curhat</span></h2>
+                <p>Punya saran sekolah atau ingin curhat? Data dikirim langsung secara rahasia dan aman ke database pengurus MPK.</p>
+            </div>
+
+            <div class="aspirasi-single-wrapper reveal">
+                <div class="form-card-centered">
+                    <form id="aspirasiForm">
+                        <div class="anon-toggle-box">
+                            <div>
+                                <strong>Kirim Sebagai Anonim (Rahasia)</strong>
+                                <small>Identitasmu disembunyikan sepenuhnya dari siapapun</small>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" id="anonToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+
+                        <div id="identityFields" class="identity-fields hidden">
+                            <div class="form-group">
+                                <label for="senderName">Nama Lengkap</label>
+                                <input type="text" id="senderName" placeholder="Contoh: Budi Santoso">
+                            </div>
+                            <div class="form-group">
+                                <label for="senderClass">Kelas</label>
+                                <input type="text" id="senderClass" placeholder="Contoh: XI IPA 2">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">Kategori Pesan</label>
+                            <select id="category" required>
+                                <option value="Aspirasi Sekolah">💡 Aspirasi &amp; Ide Sekolah</option>
+                                <option value="Evaluasi OSIS/MPK">📋 Evaluasi OSIS / MPK</option>
+                                <option value="Ruang Curhat">💙 Ruang Curhat Siswa</option>
+                                <option value="Fasilitas Kelas">🏫 Saran Fasilitas Kelas</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Isi Aspirasi atau Curhatanmu</label>
+                            <textarea id="message" rows="5" placeholder="Tuliskan pesan, saran, atau keluh kesahmu di sini dengan leluasa..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-submit" id="submitBtn">
+                            <i class="fa-solid fa-paper-plane"></i> Kirim Pesan
+                        </button>
+                        <p id="formStatus" class="form-status"></p>
+                    </form>
                 </div>
-
-                <form id="aspirasiForm" class="aspirasi-form">
-                    <div class="toggle-group">
-                        <label class="switch">
-                            <input type="checkbox" id="anonToggle" checked>
-                            <span class="slider"></span>
-                        </label>
-                        <span>Kirim sebagai <strong>Anonim (Rahasia)</strong></span>
-                    </div>
-
-                    <div id="identityFields" class="identity-fields hidden">
-                        <div class="form-group">
-                            <label for="senderName">Nama Lengkap</label>
-                            <input type="text" id="senderName" placeholder="Contoh: Budi Santoso">
-                        </div>
-                        <div class="form-group">
-                            <label for="senderClass">Kelas</label>
-                            <input type="text" id="senderClass" placeholder="Contoh: XI MIPA 2">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="category">Kategori Pesan</label>
-                        <select id="category">
-                            <option value="Aspirasi Fasilitas Sekolah">Aspirasi Fasilitas Sekolah</option>
-                            <option value="Evaluasi & Saran OSIS">Evaluasi & Saran OSIS</option>
-                            <option value="Saran Kegiatan MPK">Saran Kegiatan MPK</option>
-                            <option value="Curhat / Pengaduan Siswa">Curhat / Pengaduan Siswa</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message">Isi Pesan / Aspirasi</label>
-                        <textarea id="message" rows="4" required placeholder="Tuliskan aspirasi, saran, atau keluhanmu secara jelas dan sopan..."></textarea>
-                    </div>
-
-                    <button type="submit" id="submitBtn" class="btn-primary btn-block">
-                        <i class="fa-solid fa-paper-plane"></i> Kirim Pesan
-                    </button>
-                    <p id="formStatus" class="form-status"></p>
-                </form>
             </div>
         </div>
     </section>
@@ -255,21 +274,35 @@
     <!-- FOOTER -->
     <footer class="footer">
         <div class="container footer-content">
-            <div>
-                <h3>MPK SMANKA</h3>
-                <p>Majelis Permusyawaratan Kelas — Suara Siswa, Amanah Bersama.</p>
+            <div class="footer-brand">
+                <h3><i class="fa-solid fa-landmark text-gold"></i> MPK SMANKA</h3>
+                <p>Majelis Permusyawaratan Kelas — Mengawal demokrasi sekolah, mendengar dengan hati, dan bertindak demi kemajuan bersama.</p>
             </div>
             <div class="footer-socials">
                 <a href="https://www.instagram.com/mpk.smanka?vrfl=ODM2bzFuMHBidXJ3" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-                <a href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+                <a href="#" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 MPK SMANKA. Hak Cipta Dilindungi.</p>
+            <p>&copy; 2026 Majelis Perwakilan Kelas (MPK SMANKA). Dibuat untuk Aspirasi Siswa.</p>
         </div>
     </footer>
 
+    <!-- MODAL DETAIL FOTO GALERI -->
+    <div class="modal" id="photoModal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="forceCloseModal()"><i class="fa-solid fa-xmark"></i></button>
+            <img id="modalImg" src="" alt="Detail Kegiatan">
+            <div class="modal-body">
+                <span id="modalDate" class="badge-gold"></span>
+                <h3 id="modalTitle"></h3>
+                <p id="modalDesc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Terpisah -->
     <script src="script.js"></script>
 </body>
 </html>
