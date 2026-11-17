@@ -142,8 +142,8 @@
 
             <div class="filter-buttons reveal">
                 <button class="filter-btn active" data-filter="all">Semua Kegiatan</button>
-                <button class="filter-btn" data-filter="Sidang dan Rapat">Sidang &amp; Rapat</button>
-                <button class="filter-btn" data-filter="Dokumentasi Kegiatan">Dokumentasi Kegiatan</button>
+                <button class="filter-btn" data-filter="sidang">Sidang &amp; Rapat</button>
+                <button class="filter-btn" data-filter="forum">Dokumentasi Kegiatan</button>
             </div>
 
             <div class="gallery-grid" id="galleryGrid">
@@ -152,7 +152,7 @@
         </div>
     </section>
 
-    <!-- MINI GAME SPEED MATH (30 DETIK & LEADERBOARD BERDAMPINGAN) -->
+    <!-- MINI GAME SPEED MATH (30 DETIK & LEADERBOARD) -->
     <section id="minigame" class="section bg-white">
         <div class="container">
             <div class="section-header reveal">
@@ -161,19 +161,16 @@
                 <p>Jawab soal operasi bilangan matematika sebanyak mungkin dalam waktu 30 detik dan raih posisi teratas di papan rangking!</p>
             </div>
 
-            <!-- WADAH DUA KOLOM (GAME DI KIRI, RANGKING DI KANAN DAN SELALU TAMPIL) -->
-            <div class="game-layout-grid reveal">
-                
-                <!-- KOLOM 1: KOTAK PERMAINAN -->
+            <div class="game-container reveal">
                 <div class="game-card-box">
                     <div class="game-top-bar">
                         <div class="game-score-badge"><i class="fa-solid fa-trophy text-gold"></i> Skor: <span id="currentScore">0</span></div>
                         <div class="game-timer-badge" id="gameTimer"><i class="fa-solid fa-clock text-blue"></i> Waktu: <span id="timeLeft">30</span>s</div>
                     </div>
 
-                    <div id="gameStartScreen" style="text-align: center; padding: 15px 0;">
-                        <h3 style="margin-bottom: 12px; color: var(--logo-blue-dark);">Siap Menguji Kecepatan Hitungmu?</h3>
-                        <p style="color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem;">Kamu punya waktu 30 detik untuk menjawab soal penjumlahan (+), pengurangan (-), perkalian (×), dan pembagian (÷).</p>
+                    <div id="gameStartScreen" style="text-align: center; padding: 20px;">
+                        <h3 style="margin-bottom: 15px; color: var(--logo-blue-dark);">Siap Menguji Kecepatan Hitungmu?</h3>
+                        <p style="color: var(--text-muted); margin-bottom: 20px;">Kamu punya waktu 30 detik untuk menjawab soal penjumlahan (+), pengurangan (-), perkalian (×), dan pembagian (÷).</p>
                         <button class="btn-primary" onclick="startGame()"><i class="fa-solid fa-play"></i> Mulai Game Sekarang</button>
                     </div>
 
@@ -182,32 +179,23 @@
                         <div id="gameOptionsArea" class="game-options-grid"></div>
                     </div>
 
-                    <div id="gameOverArea" class="hidden" style="text-align: center; padding: 5px 0;">
-                        <h3 style="color: var(--logo-blue-dark); margin-bottom: 6px;">⏰ Waktu Habis!</h3>
+                    <div id="gameOverArea" class="hidden" style="text-align: center; padding: 10px;">
+                        <h3 style="color: var(--logo-blue-dark); margin-bottom: 8px;">⏰ Waktu Habis!</h3>
                         <p style="color: var(--text-muted); margin-bottom: 15px;">Total Soal Dijawab Benar: <strong id="finalScore" style="color: var(--logo-blue); font-size: 1.2rem;">0</strong></p>
                         
-                        <div class="form-group" style="margin-bottom: 15px; text-align: left;">
+                        <div class="form-group" style="max-width: 300px; margin: 0 auto 15px; text-align: left;">
                             <label for="playerName" style="font-size: 0.85rem; margin-bottom: 4px;">Nama Kamu:</label>
                             <input type="text" id="playerName" placeholder="Contoh: Budi (XI IPA)" maxlength="20">
                         </div>
-                        <button class="btn-submit" onclick="saveScore()"><i class="fa-solid fa-floppy-disk"></i> Simpan Skor</button>
+                        <button class="btn-submit" onclick="saveScore()"><i class="fa-solid fa-floppy-disk"></i> Simpan Skor ke Papan Rangking</button>
                         
-                        <button class="btn-outline" style="margin-top: 15px; width: 100%; border-radius: 12px;" onclick="startGame()"><i class="fa-solid fa-rotate-right"></i> Main Lagi</button>
+                        <div style="margin-top: 25px; text-align: left;">
+                            <h4 style="color: var(--logo-blue-dark); margin-bottom: 10px; font-size: 1rem;"><i class="fa-solid fa-ranking-star text-gold"></i> Papan Rangking (Top Skor)</h4>
+                            <ul id="leaderboardList" style="list-style: none; padding: 0; font-size: 0.9rem;"></ul>
+                        </div>
+                        <button class="btn-outline" style="margin-top: 15px; width: 100%;" onclick="startGame()"><i class="fa-solid fa-rotate-right"></i> Main Lagi</button>
                     </div>
                 </div>
-
-                <!-- KOLOM 2: KOTAK PAPAN RANGKING (SELALU TAMPIL) -->
-                <div class="leaderboard-box">
-                    <div class="leaderboard-header">
-                        <i class="fa-solid fa-crown text-gold" style="font-size: 1.2rem;"></i>
-                        <h3>Top 5 Papan Rangking</h3>
-                    </div>
-                    <p class="leaderboard-subtitle">Skor tertinggi pemain di perangkat ini:</p>
-                    <ul id="leaderboardList" class="leaderboard-list">
-                        <!-- Otomatis diisi oleh JavaScript -->
-                    </ul>
-                </div>
-
             </div>
         </div>
     </section>
@@ -262,7 +250,7 @@
                         </div>
 
                         <button type="submit" class="btn-submit" id="submitBtn">
-                            <i class="fa-solid fa-paper-plane"></i> Kirim Pesan
+                            <i class="fa-solid fa-paper-plane"></i> Kirim Pesan Secara Rahasia
                         </button>
                         <p id="formStatus" class="form-status"></p>
                     </form>
