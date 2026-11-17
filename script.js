@@ -61,7 +61,7 @@ async function loadDynamicGallery() {
                 const desc = item.Deskripsi || "";
                 const img = item.LinkGambar || "LOGO MPK.png";
 
-                const tagLabel = category === 'sidang' ? 'Program Kerja' : 'Dokumentasi Kegiatan';
+                const tagLabel = category === 'Proker' ? 'Program Kerja' : 'Dokumentasi Kegiatan';
 
                 const galleryItemHTML = `
                     <div class="gallery-item reveal active" data-category="${category}" onclick="openModal('${title}', '${date}', '${desc}', '${img}')">
