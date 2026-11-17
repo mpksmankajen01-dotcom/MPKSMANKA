@@ -57,7 +57,7 @@ async function loadDynamicGallery() {
             data.forEach(item => {
                 const title = item.Judul || "Kegiatan MPK";
                 const date = item.Tanggal || "-";
-                const category = item.Kategori || "Proker";
+                const category = item.Kategori || "Rapat";
                 const desc = item.Deskripsi || "";
                 const img = item.LinkGambar || "LOGO MPK.png";
 
