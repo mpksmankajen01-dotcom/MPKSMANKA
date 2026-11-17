@@ -564,14 +564,10 @@ body {
 .gallery-overlay p { font-size: 0.82rem; color: var(--sky-200); }
 
 /* =========================================
-   MINI GAME SPEED MATH & LEADERBOARD (2 KOLOM)
+   MINI GAME SPEED MATH STYLING
 ========================================= */
-.game-layout-grid {
-    display: grid;
-    grid-template-columns: 1.35fr 1fr;
-    gap: 25px;
-    align-items: start;
-    max-width: 980px;
+.game-container {
+    max-width: 750px;
     margin: 0 auto;
 }
 
@@ -638,40 +634,6 @@ body {
     background: #ef4444 !important;
     color: white !important;
     border-color: #dc2626 !important;
-}
-
-/* Kotak Papan Rangking di Sebelah Kanan */
-.leaderboard-box {
-    background: linear-gradient(135deg, var(--gold-soft), var(--white));
-    border: 2px solid var(--logo-gold);
-    border-radius: 24px;
-    padding: 30px;
-    box-shadow: var(--shadow-soft);
-}
-
-.leaderboard-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 6px;
-}
-
-.leaderboard-header h3 {
-    font-size: 1.15rem;
-    color: var(--logo-blue-dark);
-    margin: 0;
-}
-
-.leaderboard-subtitle {
-    font-size: 0.84rem;
-    color: var(--text-muted);
-    margin-bottom: 18px;
-}
-
-.leaderboard-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
 }
 
 /* =========================================
@@ -906,7 +868,7 @@ input:checked + .slider:before { transform: translateX(24px); }
 }
 
 @media (max-width: 850px) {
-    .hero-grid, .about-intro, .pillars-grid, .game-options-grid, .game-layout-grid {
+    .hero-grid, .about-intro, .pillars-grid, .game-options-grid {
         grid-template-columns: 1fr;
     }
     .about-logo-box { max-width: 240px; margin: 0 auto; }
