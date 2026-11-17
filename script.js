@@ -57,11 +57,11 @@ async function loadDynamicGallery() {
             data.forEach(item => {
                 const title = item.Judul || "Kegiatan MPK";
                 const date = item.Tanggal || "-";
-                const category = item.Kategori || "forum";
+                const category = item.Kategori || "Proker";
                 const desc = item.Deskripsi || "";
                 const img = item.LinkGambar || "LOGO MPK.png";
 
-                const tagLabel = category === 'sidang' ? 'Sidang & Rapat' : 'Dokumentasi Kegiatan';
+                const tagLabel = category === 'sidang' ? 'Program Kerja' : 'Dokumentasi Kegiatan';
 
                 const galleryItemHTML = `
                     <div class="gallery-item reveal active" data-category="${category}" onclick="openModal('${title}', '${date}', '${desc}', '${img}')">
