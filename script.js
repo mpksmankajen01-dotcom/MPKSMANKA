@@ -3,6 +3,7 @@
 // =========================================
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbHzjo27PHzzm9cBuccsL9aA3ntF6xN1DMUVLYeMzkCXDvqf8JDBCKQl-sBQ_1CTG-3Q/exec"; 
 const GALLERY_SHEET_URL = "https://script.google.com/macros/s/AKfycbzbHzjo27PHzzm9cBuccsL9aA3ntF6xN1DMUVLYeMzkCXDvqf8JDBCKQl-sBQ_1CTG-3Q/exec"; 
+const LEADERBOARD_SHEET_URL = GOOGLE_SCRIPT_URL;
 
 // =========================================
 // 1. MENU MOBILE TOGGLE
@@ -136,7 +137,7 @@ function closeModal(event) {
 }
 
 // =========================================
-// 6. MINI GAME SPEED MATH (30 DETIK & LEADERBOARD)
+// 6. MINI GAME SPEED MATH (30 DETIK & LEADERBOARD GOOGLE SHEETS)
 // =========================================
 let score = 0;
 let timeLeft = 30;
@@ -257,43 +258,75 @@ function endGame() {
     displayLeaderboard();
 }
 
-function saveScore() {
+async function saveScore() {
     const name = playerNameInput ? playerNameInput.value.trim() : "";
     if (!name) {
         alert("Silakan masukkan nama kamu terlebih dahulu!");
         return;
     }
 
-    let leaderboard = JSON.parse(localStorage.getItem('mpk_math_leaderboard')) || [];
-    leaderboard.push({ name: name, score: score });
-    leaderboard.sort((a, b) => b.score - a.score);
-    leaderboard = leaderboard.slice(0, 5);
-
-    localStorage.setItem('mpk_math_leaderboard', JSON.stringify(leaderboard));
-    displayLeaderboard();
-    if (playerNameInput) playerNameInput.value = "";
-    alert("Skor berhasil disimpan ke papan rangking!");
-}
-
-function displayLeaderboard() {
-    if (!leaderboardList) return;
-    let leaderboard = JSON.parse(localStorage.getItem('mpk_math_leaderboard')) || [];
-    
-    if (leaderboard.length === 0) {
-        leaderboardList.innerHTML = `<li style="color: var(--text-muted); padding: 5px 0;">Belum ada skor tercatat. Jadilah yang pertama!</li>`;
-        return;
+    const saveBtn = document.getElementById('saveScoreBtn');
+    if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
     }
 
-    leaderboardList.innerHTML = "";
-    leaderboard.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.style.cssText = "display: flex; justify-content: space-between; padding: 6px 10px; margin-bottom: 6px; background: var(--sky-50); border-radius: 8px; border: 1px solid var(--sky-200); font-weight: 600;";
-        li.innerHTML = `<span>#${index + 1} ${item.name}</span> <span class="text-blue">${item.score} Soal Benar</span>`;
-        leaderboardList.appendChild(li);
-    });
+    const formData = new URLSearchParams();
+    formData.append('type', 'leaderboard');
+    formData.append('name', name);
+    formData.append('score', score);
+
+    try {
+        if (LEADERBOARD_SHEET_URL !== "" && LEADERBOARD_SHEET_URL.includes("https://script.google.com")) {
+            await fetch(LEADERBOARD_SHEET_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData.toString()
+            });
+        }
+
+        if (playerNameInput) playerNameInput.value = "";
+        alert("Skor berhasil disimpan ke papan rangking!");
+
+        setTimeout(() => {
+            displayLeaderboard();
+        }, 1200);
+    } catch (error) {
+        console.error("Gagal menyimpan skor:", error);
+        alert("Gagal menyimpan skor ke papan rangking.");
+    } finally {
+        if (saveBtn) {
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Skor ke Papan Rangking';
+        }
+    }
 }
 
-displayLeaderboard();
+async function displayLeaderboard() {
+    if (!leaderboardList) return;
+
+    try {
+        const response = await fetch(`${LEADERBOARD_SHEET_URL}?action=leaderboard`);
+        const leaderboard = await response.json();
+
+        if (!leaderboard || leaderboard.length === 0) {
+            leaderboardList.innerHTML = `<li style="color: var(--text-muted); padding: 5px 0;">Belum ada skor tercatat. Jadilah yang pertama!</li>`;
+            return;
+        }
+
+        leaderboardList.innerHTML = "";
+        leaderboard.slice(0, 5).forEach((item, index) => {
+            const li = document.createElement('li');
+            li.style.cssText = "display: flex; justify-content: space-between; padding: 6px 10px; margin-bottom: 6px; background: var(--sky-50); border-radius: 8px; border: 1px solid var(--sky-200); font-weight: 600;";
+            li.innerHTML = `<span>#${index + 1} ${item.name}</span> <span class="text-blue">${item.score} Soal Benar</span>`;
+            leaderboardList.appendChild(li);
+        });
+    } catch (error) {
+        console.error("Gagal memuat papan rangking:", error);
+        leaderboardList.innerHTML = `<li style="color: #dc2626; padding: 5px 0;">Gagal memuat papan rangking.</li>`;
+    }
+}
 
 // =========================================
 // 7. FORM ASPIRASI & KIRIM KE GOOGLE SHEETS
@@ -379,7 +412,8 @@ if (aspirasiForm) {
     });
 }
 
-// Inisialisasi galeri saat halaman dimuat
+// Inisialisasi galeri dan papan rangking saat halaman dimuat
 window.addEventListener('load', () => {
     loadDynamicGallery();
+    displayLeaderboard();
 });
