@@ -489,12 +489,8 @@ body {
     gap: 12px;
     margin-bottom: 35px;
     flex-wrap: wrap;
-    overflow-x: auto;
-    white-space: nowrap;
     padding-bottom: 6px;
-    scrollbar-width: none;
 }
-.filter-buttons::-webkit-scrollbar { display: none; }
 
 .filter-btn {
     padding: 10px 22px;
