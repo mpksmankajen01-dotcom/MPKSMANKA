@@ -1,9 +1,9 @@
 // =========================================
 // KONFIGURASI GOOGLE SHEETS (Ganti dengan URL Web App Anda)
 // =========================================
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbHzjo27PHzzm9cBuccsL9aA3ntF6xN1DMUVLYeMzkCXDvqf8JDBCKQl-sBQ_1CTG-3Q/exec"; 
-const GALLERY_SHEET_URL = "https://script.google.com/macros/s/AKfycbzbHzjo27PHzzm9cBuccsL9aA3ntF6xN1DMUVLYeMzkCXDvqf8JDBCKQl-sBQ_1CTG-3Q/exec"; 
-const LEADERBOARD_SHEET_URL = GOOGLE_SCRIPT_URL;
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUjygcJEgnGyed9tQN3PQbF-E1fkaP0F8AcEx93MgRoj9UGPuaCV--y2DF-v0fztJbqg/exec"; 
+const GALLERY_SHEET_URL = "https://script.google.com/macros/s/AKfycbxUjygcJEgnGyed9tQN3PQbF-E1fkaP0F8AcEx93MgRoj9UGPuaCV--y2DF-v0fztJbqg/exec"; 
+const LEADERBOARD_SHEET_URL = "https://script.google.com/macros/s/AKfycbxUjygcJEgnGyed9tQN3PQbF-E1fkaP0F8AcEx93MgRoj9UGPuaCV--y2DF-v0fztJbqg/exec";
 
 // =========================================
 // 1. MENU MOBILE TOGGLE
