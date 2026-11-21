@@ -152,7 +152,7 @@
         </div>
     </section>
 
-    <!-- MINI GAME SPEED MATH (30 DETIK & LEADERBOARD) -->
+    <!-- MINI GAME SPEED MATH (30 DETIK & LEADERBOARD SELALU TAMPIL) -->
     <section id="minigame" class="section bg-white">
         <div class="container">
             <div class="section-header reveal">
@@ -187,13 +187,16 @@
                             <label for="playerName" style="font-size: 0.85rem; margin-bottom: 4px;">Nama Kamu:</label>
                             <input type="text" id="playerName" placeholder="Contoh: Budi (XI IPA)" maxlength="20">
                         </div>
-                        <button class="btn-submit" onclick="saveScore()"><i class="fa-solid fa-floppy-disk"></i> Simpan Skor ke Papan Rangking</button>
-                        
-                        <div style="margin-top: 25px; text-align: left;">
-                            <h4 style="color: var(--logo-blue-dark); margin-bottom: 10px; font-size: 1rem;"><i class="fa-solid fa-ranking-star text-gold"></i> Papan Rangking (Top Skor)</h4>
-                            <ul id="leaderboardList" style="list-style: none; padding: 0; font-size: 0.9rem;"></ul>
-                        </div>
-                        <button class="btn-outline" style="margin-top: 15px; width: 100%;" onclick="startGame()"><i class="fa-solid fa-rotate-right"></i> Main Lagi</button>
+                        <button class="btn-submit" id="saveScoreBtn" onclick="saveScore()"><i class="fa-solid fa-floppy-disk"></i> Simpan Skor ke Papan Rangking</button>
+                        <button class="btn-outline" style="margin-top: 12px; width: 100%;" onclick="startGame()"><i class="fa-solid fa-rotate-right"></i> Main Lagi</button>
+                    </div>
+
+                    <!-- PAPAN RANGKING SELALU MUNCUL -->
+                    <div id="persistentLeaderboard" style="margin-top: 25px; padding-top: 20px; border-top: 1.5px solid var(--sky-200); text-align: left;">
+                        <h4 style="color: var(--logo-blue-dark); margin-bottom: 10px; font-size: 1rem;"><i class="fa-solid fa-ranking-star text-gold"></i> Papan Rangking (Top Skor)</h4>
+                        <ul id="leaderboardList" style="list-style: none; padding: 0; font-size: 0.9rem;">
+                            <li style="color: var(--text-muted); padding: 5px 0;">Memuat papan rangking...</li>
+                        </ul>
                     </div>
                 </div>
             </div>
