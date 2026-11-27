@@ -131,28 +131,33 @@
         </div>
     </section>
 
-    <!-- GALERI FOTO KEGIATAN (DINAMIS DARI GOOGLE SHEETS) -->
+    <!-- GALERI KEGIATAN (SLIDER VERTIKAL & PENCARIAN) -->
     <section id="galeri" class="section bg-soft-blue">
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-subtitle">Dokumentasi</span>
                 <h2>Galeri Kegiatan <span class="text-gold">MPK</span></h2>
-                <p>Jelajahi berbagai program kerja serta dokumentasi kegiatan di sini.</p>
+                <p>Jelajahi dokumentasi kegiatan pilihan kami di bawah ini.</p>
             </div>
 
-            <div class="filter-buttons reveal">
-                <button class="filter-btn active" data-filter="all">Semua</button>
-                <button class="filter-btn" data-filter="Proker">Program Kerja</button>
-                <button class="filter-btn" data-filter="Dokumentasi Kegiatan">Dokumentasi Kegiatan</button>
+            <!-- Menu Pencarian Judul Foto -->
+            <div class="gallery-search-box reveal">
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="gallerySearchInput" placeholder="Cari judul kegiatan atau foto..." oninput="filterGalleryBySearch()">
+                </div>
             </div>
 
-            <div class="gallery-grid" id="galleryGrid">
-                <p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Memuat galeri...</p>
+            <!-- Container Slider Vertikal (Sesuai Sketsa) -->
+            <div class="vertical-slider-container reveal" id="verticalSliderContainer" onmouseenter="pauseAutoSlide()" onmouseleave="resumeAutoSlide()">
+                <div class="vertical-slider-track" id="galleryGrid">
+                    <p style="text-align: center; color: var(--text-muted); padding: 40px;">Memuat galeri...</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- MINI GAME SPEED MATH (30 DETIK & LEADERBOARD SELALU TAMPIL) -->
+    <!-- MINI GAME SPEED MATH -->
     <section id="minigame" class="section bg-white">
         <div class="container">
             <div class="section-header reveal">
@@ -191,7 +196,6 @@
                         <button class="btn-outline" style="margin-top: 12px; width: 100%;" onclick="startGame()"><i class="fa-solid fa-rotate-right"></i> Main Lagi</button>
                     </div>
 
-                    <!-- PAPAN RANGKING SELALU MUNCUL -->
                     <div id="persistentLeaderboard" style="margin-top: 25px; padding-top: 20px; border-top: 1.5px solid var(--sky-200); text-align: left;">
                         <h4 style="color: var(--logo-blue-dark); margin-bottom: 10px; font-size: 1rem;"><i class="fa-solid fa-ranking-star text-gold"></i> Papan Rangking (Top Skor)</h4>
                         <ul id="leaderboardList" style="list-style: none; padding: 0; font-size: 0.9rem;">
