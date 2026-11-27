@@ -69,21 +69,24 @@ function renderGalleryItems(data) {
 
     galleryGrid.innerHTML = ""; 
     
-    // Tampilkan maksimal 5 foto sesuai permintaan
-    const displayData = data.slice(0, 5);
+    if (!Array.isArray(data) || data.length === 0) {
+        galleryGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 20px;">Tidak ada data galeri.</p>`;
+        return;
+    }
 
-    displayData.forEach(item => {
-        const title = item.Judul || "Kegiatan MPK";
-        const date = item.Tanggal || "-";
-        const category = item.Kategori || "Rapat";
-        const desc = item.Deskripsi || "";
-        const img = item.LinkGambar || "LOGO MPK.png";
+    // Menampilkan seluruh data foto yang ada di Google Sheets (tanpa batasan .slice agar semua tampil)
+    data.forEach(item => {
+        const title = item.Judul || item.judul || "Kegiatan MPK";
+        const date = item.Tanggal || item.tanggal || "-";
+        const category = item.Kategori || item.kategori || "Rapat";
+        const desc = item.Deskripsi || item.deskripsi || "";
+        const img = item.LinkGambar || item.linkgambar || "LOGO MPK.png";
 
         const tagLabel = category === 'Proker' ? 'Program Kerja' : 'Dokumentasi Kegiatan';
 
         const galleryItemHTML = `
             <div class="gallery-item" data-title="${title.toLowerCase()}" onclick="handleGalleryClick('${title}', '${date}', '${desc}', '${img}')">
-                <img src="${img}" alt="${title}">
+                <img src="${img}" alt="${title}" onerror="this.src='LOGO MPK.png'">
                 <div class="gallery-overlay">
                     <span class="gallery-tag">${tagLabel}</span>
                     <h4>${title}</h4>
@@ -133,7 +136,7 @@ function handleGalleryClick(title, date, desc, img) {
 function filterGalleryBySearch() {
     const query = document.getElementById('gallerySearchInput').value.toLowerCase();
     const filteredData = allGalleryData.filter(item => {
-        const title = (item.Judul || "").toLowerCase();
+        const title = (item.Judul || item.judul || "").toLowerCase();
         return title.includes(query);
     });
 
@@ -144,7 +147,10 @@ function filterGalleryBySearch() {
     if (filteredData.length > 0) {
         renderGalleryItems(filteredData);
     } else {
-        galleryGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 20px;">Judul foto tidak ditemukan.</p>`;
+        const galleryGrid = document.getElementById('galleryGrid');
+        if (galleryGrid) {
+            galleryGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 20px;">Judul foto tidak ditemukan.</p>`;
+        }
     }
 }
 
