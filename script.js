@@ -17,7 +17,9 @@ if (menuToggle && navLinks) {
     });
 }
 
-// ANIMASI SCROLL REVEAL
+// =========================================
+// 2. ANIMASI SCROLL REVEAL
+// =========================================
 const revealElements = document.querySelectorAll('.reveal');
 
 const revealOnScroll = () => {
@@ -33,11 +35,9 @@ const revealOnScroll = () => {
 window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
 
-// GALERI DINAMIS, AUTO-SLIDE VERTIKAL, & PENCARIAN
-let allGalleryData = [];
-let autoSlideInterval = null;
-let currentScrollIndex = 0;
-
+// =========================================
+// 3. AMBIL DATA GALERI DARI GOOGLE SHEETS
+// =========================================
 async function loadDynamicGallery() {
     const galleryGrid = document.getElementById('galleryGrid');
     if (!galleryGrid) return;
@@ -47,120 +47,65 @@ async function loadDynamicGallery() {
         const data = await response.json();
 
         if (data && data.length > 0) {
-            allGalleryData = data;
-            renderGalleryItems(allGalleryData);
-            startAutoSlide();
-        } else {
-            galleryGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 40px;">Tidak ada data galeri.</p>`;
+            galleryGrid.innerHTML = ""; 
+            
+            data.forEach(item => {
+                const title = item.Judul || "Kegiatan MPK";
+                const date = item.Tanggal || "-";
+                const category = item.Kategori || "Rapat";
+                const desc = item.Deskripsi || "";
+                const img = item.LinkGambar || "LOGO MPK.png";
+
+                const tagLabel = category === 'Proker' ? 'Program Kerja' : 'Dokumentasi Kegiatan';
+
+                const galleryItemHTML = `
+                    <div class="gallery-item reveal active" data-category="${category}" onclick="openModal('${title}', '${date}', '${desc}', '${img}')">
+                        <img src="${img}" alt="${title}">
+                        <div class="gallery-overlay">
+                            <span class="gallery-tag">${tagLabel}</span>
+                            <h4>${title}</h4>
+                            <p><i class="fa-regular fa-calendar"></i> ${date}</p>
+                        </div>
+                    </div>
+                `;
+                galleryGrid.insertAdjacentHTML('beforeend', galleryItemHTML);
+            });
+            setupGalleryFilter();
         }
     } catch (error) {
         console.error("Gagal memuat galeri:", error);
-        galleryGrid.innerHTML = `<p style="text-align: center; color: #dc2626; padding: 40px;">Gagal memuat galeri dari Google Sheets.</p>`;
+        galleryGrid.innerHTML = `<p style="text-align: center; color: #dc2626; grid-column: 1/-1;">Gagal memuat galeri dari Google Sheets.</p>`;
     }
 }
 
-function renderGalleryItems(data) {
-    const galleryGrid = document.getElementById('galleryGrid');
-    if (!galleryGrid) return;
+// =========================================
+// 4. FILTER GALERI KEGIATAN
+// =========================================
+function setupGalleryFilter() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
 
-    galleryGrid.innerHTML = ""; 
-    
-    if (!Array.isArray(data) || data.length === 0) {
-        galleryGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 40px;">Tidak ada data galeri.</p>`;
-        return;
-    }
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-    // Menduplikasi data (data asli + data asli) agar pergerakan slider vertikal berputar mulus tanpa jeda kosong
-    const loopData = [...data, ...data];
+            const filterValue = btn.getAttribute('data-filter');
 
-    loopData.forEach(item => {
-        const title = item.Judul || item.judul || "Kegiatan MPK";
-        const date = item.Tanggal || item.tanggal || "-";
-        const category = item.Kategori || item.kategori || "Rapat";
-        const desc = item.Deskripsi || item.deskripsi || "";
-        const img = item.LinkGambar || item.linkgambar || "LOGO MPK.png";
-
-        const tagLabel = category === 'Proker' ? 'Program Kerja' : 'Dokumentasi Kegiatan';
-
-        const galleryItemHTML = `
-            <div class="gallery-item" data-title="${title.toLowerCase()}" onclick="handleGalleryClick('${title.replace(/'/g, "\\'")}', '${date.replace(/'/g, "\\'")}', '${desc.replace(/'/g, "\\'")}', '${img}')">
-                <img src="${img}" alt="${title}" onerror="this.src='LOGO MPK.png'">
-                <div class="gallery-overlay">
-                    <span class="gallery-tag">${tagLabel}</span>
-                    <h4>${title}</h4>
-                    <p><i class="fa-regular fa-calendar"></i> ${date}</p>
-                </div>
-            </div>
-        `;
-        galleryGrid.insertAdjacentHTML('beforeend', galleryItemHTML);
+            galleryItems.forEach(item => {
+                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
     });
 }
 
-// Auto-Slide Vertikal Tanpa Henti (Infinite Loop) setiap 1.5 detik
-function startAutoSlide() {
-    const track = document.getElementById('galleryGrid');
-    if (!track) return;
-
-    if (autoSlideInterval) clearInterval(autoSlideInterval);
-
-    autoSlideInterval = setInterval(() => {
-        const items = track.querySelectorAll('.gallery-item');
-        if (items.length <= 1) return;
-
-        currentScrollIndex++;
-        
-        // Jika mencapai batas setengah data (akhir data asli), reset mulus ke atas
-        if (currentScrollIndex >= items.length / 2) {
-            track.style.transition = 'none';
-            currentScrollIndex = 0;
-            track.style.transform = `translateY(0px)`;
-            
-            setTimeout(() => {
-                track.style.transition = 'transform 0.6s ease-in-out';
-            }, 50);
-            return;
-        }
-
-        const itemHeight = items[0].offsetHeight + 20; // 20px sesuai gap CSS
-        track.style.transform = `translateY(-${currentScrollIndex * itemHeight}px)`;
-    }, 1500); // 1.5 detik
-}
-
-function pauseAutoSlide() {
-    if (autoSlideInterval) clearInterval(autoSlideInterval);
-}
-
-function resumeAutoSlide() {
-    startAutoSlide();
-}
-
-function handleGalleryClick(title, date, desc, img) {
-    pauseAutoSlide(); // Berhenti otomatis saat diklik
-    openModal(title, date, desc, img);
-}
-
-// Fitur Pencarian Judul Foto secara Real-time
-function filterGalleryBySearch() {
-    const query = document.getElementById('gallerySearchInput').value.toLowerCase();
-    const filteredData = allGalleryData.filter(item => {
-        const title = (item.Judul || item.judul || "").toLowerCase();
-        return title.includes(query);
-    });
-
-    currentScrollIndex = 0;
-    const track = document.getElementById('galleryGrid');
-    if (track) track.style.transform = `translateY(0px)`;
-
-    if (filteredData.length > 0) {
-        renderGalleryItems(filteredData);
-    } else {
-        if (galleryGrid) {
-            galleryGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 40px;">Judul foto tidak ditemukan.</p>`;
-        }
-    }
-}
-
-// MODAL DETAIL FOTO GALERI
+// =========================================
+// 5. MODAL DETAIL FOTO GALERI
+// =========================================
 const photoModal = document.getElementById('photoModal');
 const modalImg = document.getElementById('modalImg');
 const modalDate = document.getElementById('modalDate');
@@ -179,16 +124,15 @@ function openModal(title, date, desc, imgSrc) {
 
 function forceCloseModal() {
     if (photoModal) photoModal.classList.remove('active');
-    startAutoSlide(); // Lanjutkan kembali auto-slide saat modal ditutup
 }
 
 function closeModal(event) {
-    if (event.target === photoModal) {
-        forceCloseModal();
-    }
+    if (event.target === photoModal) forceCloseModal();
 }
 
-// MINI GAME SPEED MATH
+// =========================================
+// 6. MINI GAME SPEED MATH (30 DETIK & LEADERBOARD GOOGLE SHEETS)
+// =========================================
 let score = 0;
 let timeLeft = 30;
 let timerInterval = null;
@@ -378,7 +322,9 @@ async function displayLeaderboard() {
     }
 }
 
-// FORM ASPIRASI & KIRIM KE GOOGLE SHEETS
+// =========================================
+// 7. FORM ASPIRASI & KIRIM KE GOOGLE SHEETS
+// =========================================
 const anonToggle = document.getElementById('anonToggle');
 const identityFields = document.getElementById('identityFields');
 const aspirasiForm = document.getElementById('aspirasiForm');
