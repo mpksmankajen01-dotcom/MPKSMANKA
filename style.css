@@ -481,67 +481,91 @@ body {
 .pillar-card h3 { color: var(--logo-blue-dark); margin-bottom: 10px; }
 
 /* =========================================
-   GALERI KEGIATAN & FILTER (RESPONSIF)
+   STYLE GALERI VERTIKAL & PENCARIAN
 ========================================= */
-.filter-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 35px;
-    flex-wrap: wrap;
-    padding-bottom: 6px;
+.gallery-search-box {
+    max-width: 500px;
+    margin: 0 auto 30px;
 }
 
-.filter-btn {
-    padding: 10px 22px;
-    border-radius: 50px;
-    border: 1.5px solid var(--logo-blue);
-    background: var(--white);
-    color: var(--logo-blue);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    flex-shrink: 0;
-}
-
-.filter-btn.active, .filter-btn:hover {
-    background: var(--logo-blue);
-    color: var(--white);
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
-}
-
-.gallery-item {
+.search-input-wrapper {
     position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    height: 270px;
+    display: flex;
+    align-items: center;
+}
+
+.search-input-wrapper i {
+    position: absolute;
+    left: 16px;
+    color: var(--logo-blue);
+    font-size: 1rem;
+}
+
+.search-input-wrapper input {
+    width: 100%;
+    padding: 12px 16px 12px 45px;
+    border-radius: 50px;
+    border: 1.5px solid var(--sky-200);
+    background: var(--white);
+    font-size: 0.95rem;
+    outline: none;
+    box-shadow: var(--shadow-soft);
+    transition: border-color 0.3s;
+}
+
+.search-input-wrapper input:focus {
+    border-color: var(--logo-blue);
+}
+
+/* Container Slider Vertikal (Menampilkan Tumpukan Foto) */
+.vertical-slider-container {
+    max-width: 600px;
+    height: 420px;
+    margin: 0 auto;
+    overflow-y: hidden;
+    position: relative;
+    padding: 10px;
+}
+
+.vertical-slider-track {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Kartu Foto dalam Slider */
+.vertical-slider-container .gallery-item {
+    height: 120px;
+    border-radius: 16px;
     cursor: pointer;
     border: 2px solid var(--white);
     box-shadow: var(--shadow-soft);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
 }
 
-.gallery-item img {
+.vertical-slider-container .gallery-item:hover {
+    border-color: var(--logo-gold);
+    transform: scale(1.02);
+}
+
+.vertical-slider-container .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
 }
 
-.gallery-item:hover img { transform: scale(1.08); }
-
-.gallery-overlay {
+.vertical-slider-container .gallery-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(19, 78, 133, 0.92) 10%, transparent 75%);
+    background: linear-gradient(to top, rgba(19, 78, 133, 0.9) 20%, transparent 90%);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 20px;
+    padding: 12px 20px;
     color: var(--white);
 }
 
@@ -553,11 +577,18 @@ body {
     font-weight: 800;
     padding: 4px 10px;
     border-radius: 20px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
-.gallery-overlay h4 { font-size: 1.1rem; margin-bottom: 4px; }
-.gallery-overlay p { font-size: 0.82rem; color: var(--sky-200); }
+.vertical-slider-container .gallery-overlay h4 {
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+}
+
+.vertical-slider-container .gallery-overlay p {
+    font-size: 0.8rem;
+    color: var(--sky-200);
+}
 
 /* =========================================
    MINI GAME SPEED MATH STYLING
