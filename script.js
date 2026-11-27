@@ -36,11 +36,9 @@ window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
 
 // =========================================
-// 3. GALERI DINAMIS, AUTO-SCROLL, & PENCARIAN
+// 3. AMBIL DATA GALERI & PENCARIAN
 // =========================================
 let allGalleryData = [];
-let autoSlideInterval = null;
-let currentScrollIndex = 0;
 
 async function loadDynamicGallery() {
     const galleryGrid = document.getElementById('galleryGrid');
@@ -53,13 +51,12 @@ async function loadDynamicGallery() {
         if (data && data.length > 0) {
             allGalleryData = data;
             renderGalleryItems(allGalleryData);
-            startAutoSlide();
         } else {
-            galleryGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 20px;">Tidak ada data galeri.</p>`;
+            galleryGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); grid-column: 1/-1; padding: 20px;">Tidak ada data galeri.</p>`;
         }
     } catch (error) {
         console.error("Gagal memuat galeri:", error);
-        galleryGrid.innerHTML = `<p style="text-align: center; color: #dc2626; padding: 20px;">Gagal memuat galeri dari Google Sheets.</p>`;
+        galleryGrid.innerHTML = `<p style="text-align: center; color: #dc2626; grid-column: 1/-1; padding: 20px;">Gagal memuat galeri dari Google Sheets.</p>`;
     }
 }
 
@@ -70,11 +67,10 @@ function renderGalleryItems(data) {
     galleryGrid.innerHTML = ""; 
     
     if (!Array.isArray(data) || data.length === 0) {
-        galleryGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 20px;">Tidak ada data galeri.</p>`;
+        galleryGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); grid-column: 1/-1; padding: 20px;">Tidak ada data galeri.</p>`;
         return;
     }
 
-    // Menampilkan seluruh data foto yang ada di Google Sheets (tanpa batasan .slice agar semua tampil)
     data.forEach(item => {
         const title = item.Judul || item.judul || "Kegiatan MPK";
         const date = item.Tanggal || item.tanggal || "-";
@@ -85,7 +81,7 @@ function renderGalleryItems(data) {
         const tagLabel = category === 'Proker' ? 'Program Kerja' : 'Dokumentasi Kegiatan';
 
         const galleryItemHTML = `
-            <div class="gallery-item" data-title="${title.toLowerCase()}" onclick="handleGalleryClick('${title}', '${date}', '${desc}', '${img}')">
+            <div class="gallery-item reveal active" onclick="openModal('${title}', '${date}', '${desc}', '${img}')">
                 <img src="${img}" alt="${title}" onerror="this.src='LOGO MPK.png'">
                 <div class="gallery-overlay">
                     <span class="gallery-tag">${tagLabel}</span>
@@ -98,40 +94,6 @@ function renderGalleryItems(data) {
     });
 }
 
-// Auto-Slide setiap 1.5 detik
-function startAutoSlide() {
-    const track = document.getElementById('galleryGrid');
-    if (!track) return;
-
-    if (autoSlideInterval) clearInterval(autoSlideInterval);
-
-    autoSlideInterval = setInterval(() => {
-        const items = track.querySelectorAll('.gallery-item');
-        if (items.length <= 1) return;
-
-        currentScrollIndex++;
-        if (currentScrollIndex >= items.length) {
-            currentScrollIndex = 0;
-        }
-
-        const itemHeight = items[0].offsetHeight + 15; 
-        track.style.transform = `translateY(-${currentScrollIndex * itemHeight}px)`;
-    }, 1500); // 1.5 detik
-}
-
-function pauseAutoSlide() {
-    if (autoSlideInterval) clearInterval(autoSlideInterval);
-}
-
-function resumeAutoSlide() {
-    startAutoSlide();
-}
-
-function handleGalleryClick(title, date, desc, img) {
-    pauseAutoSlide(); // Berhenti otomatis saat gambar diklik
-    openModal(title, date, desc, img);
-}
-
 // Fitur Pencarian Judul Foto secara Real-time
 function filterGalleryBySearch() {
     const query = document.getElementById('gallerySearchInput').value.toLowerCase();
@@ -140,18 +102,7 @@ function filterGalleryBySearch() {
         return title.includes(query);
     });
 
-    currentScrollIndex = 0;
-    const track = document.getElementById('galleryGrid');
-    if (track) track.style.transform = `translateY(0px)`;
-
-    if (filteredData.length > 0) {
-        renderGalleryItems(filteredData);
-    } else {
-        const galleryGrid = document.getElementById('galleryGrid');
-        if (galleryGrid) {
-            galleryGrid.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 20px;">Judul foto tidak ditemukan.</p>`;
-        }
-    }
+    renderGalleryItems(filteredData);
 }
 
 // =========================================
@@ -175,7 +126,6 @@ function openModal(title, date, desc, imgSrc) {
 
 function forceCloseModal() {
     if (photoModal) photoModal.classList.remove('active');
-    startAutoSlide(); // Lanjutkan kembali auto-slide saat modal ditutup
 }
 
 function closeModal(event) {
