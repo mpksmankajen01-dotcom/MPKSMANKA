@@ -1,3 +1,6 @@
+/* =========================================
+   VARIABEL WARNA SESUAI LOGO MPK SMANKA
+========================================= */
 :root {
     --sky-50: #f3f9fe;
     --sky-100: #e5f3fc;
@@ -40,7 +43,9 @@ body {
 .text-blue { color: var(--logo-blue); }
 .hidden { display: none !important; }
 
-/* NAVBAR */
+/* =========================================
+   NAVBAR
+========================================= */
 .navbar {
     position: fixed;
     top: 0;
@@ -124,7 +129,9 @@ body {
     cursor: pointer;
 }
 
-/* HERO SECTION */
+/* =========================================
+   HERO SECTION
+========================================= */
 .hero {
     position: relative;
     padding: 150px 0 120px;
@@ -323,7 +330,9 @@ body {
 
 .wave-bottom svg { width: 100%; height: 60px; fill: var(--white); }
 
-/* SECTION TENTANG & PILAR */
+/* =========================================
+   SECTION TENTANG & PILAR
+========================================= */
 .section { padding: 85px 0; }
 .bg-white { background-color: var(--white); }
 .bg-soft-blue { background-color: var(--sky-100); }
@@ -471,90 +480,61 @@ body {
 
 .pillar-card h3 { color: var(--logo-blue-dark); margin-bottom: 10px; }
 
-/* STYLE GALERI: SLIDER VERTIKAL DENGAN UKURAN LEBAR PENUH SEPERTI AWAL */
-.gallery-search-box {
-    max-width: 500px;
-    margin: 0 auto 30px;
-}
-
-.search-input-wrapper {
-    position: relative;
+/* =========================================
+   GALERI KEGIATAN & FILTER (RESPONSIF)
+========================================= */
+.filter-buttons {
     display: flex;
-    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+    padding-bottom: 6px;
 }
 
-.search-input-wrapper i {
-    position: absolute;
-    left: 16px;
-    color: var(--logo-blue);
-    font-size: 1rem;
-}
-
-.search-input-wrapper input {
-    width: 100%;
-    padding: 12px 16px 12px 45px;
+.filter-btn {
+    padding: 10px 22px;
     border-radius: 50px;
-    border: 1.5px solid var(--sky-200);
+    border: 1.5px solid var(--logo-blue);
     background: var(--white);
-    font-size: 0.95rem;
-    outline: none;
-    box-shadow: var(--shadow-soft);
-    transition: border-color 0.3s;
+    color: var(--logo-blue);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
 }
 
-.search-input-wrapper input:focus {
-    border-color: var(--logo-blue);
+.filter-btn.active, .filter-btn:hover {
+    background: var(--logo-blue);
+    color: var(--white);
 }
 
-/* Container Slider Vertikal dengan Lebar Penuh (Full Width) */
-.vertical-slider-container {
-    max-width: 100%;
-    width: 100%;
-    height: 480px;
-    margin: 0 auto;
-    overflow-y: hidden;
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.gallery-item {
     position: relative;
-    padding: 10px 0;
-}
-
-.vertical-slider-track {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    transition: transform 0.6s ease-in-out;
-}
-
-/* Kartu Foto Ukuran Lebar Penuh (Full Width seperti Grid Awal) */
-.vertical-slider-container .gallery-item {
-    width: 100%;
-    height: 270px;
     border-radius: 20px;
+    overflow: hidden;
+    height: 270px;
     cursor: pointer;
     border: 2px solid var(--white);
     box-shadow: var(--shadow-soft);
-    flex-shrink: 0;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-.vertical-slider-container .gallery-item:hover {
-    border-color: var(--logo-gold);
-    transform: scale(1.01);
-}
-
-.vertical-slider-container .gallery-item img {
+.gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
 
-.vertical-slider-container .gallery-item:hover img {
-    transform: scale(1.05);
-}
+.gallery-item:hover img { transform: scale(1.08); }
 
-.vertical-slider-container .gallery-overlay {
+.gallery-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(to top, rgba(19, 78, 133, 0.92) 10%, transparent 75%);
@@ -576,17 +556,12 @@ body {
     margin-bottom: 8px;
 }
 
-.vertical-slider-container .gallery-overlay h4 {
-    font-size: 1.1rem;
-    margin-bottom: 4px;
-}
+.gallery-overlay h4 { font-size: 1.1rem; margin-bottom: 4px; }
+.gallery-overlay p { font-size: 0.82rem; color: var(--sky-200); }
 
-.vertical-slider-container .gallery-overlay p {
-    font-size: 0.85rem;
-    color: var(--sky-200);
-}
-
-/* MINI GAME SPEED MATH STYLING */
+/* =========================================
+   MINI GAME SPEED MATH STYLING
+========================================= */
 .game-container {
     max-width: 750px;
     margin: 0 auto;
@@ -657,7 +632,9 @@ body {
     border-color: #dc2626 !important;
 }
 
-/* RUANG ASPIRASI TERPUSAT */
+/* =========================================
+   RUANG ASPIRASI TERPUSAT (PRIVAT)
+========================================= */
 .aspirasi-single-wrapper {
     max-width: 680px;
     margin: 0 auto;
@@ -778,7 +755,9 @@ input:checked + .slider:before { transform: translateX(24px); }
     text-align: center;
 }
 
-/* FOOTER & MODAL */
+/* =========================================
+   FOOTER & MODAL
+========================================= */
 .footer {
     background: var(--logo-blue-dark);
     color: var(--white);
@@ -870,7 +849,9 @@ input:checked + .slider:before { transform: translateX(24px); }
 .modal-body { padding: 24px; }
 .modal-body h3 { color: var(--logo-blue-dark); margin-bottom: 8px; }
 
-/* ANIMASI & RESPONSIVE */
+/* =========================================
+   ANIMASI & RESPONSIVE
+========================================= */
 .reveal {
     opacity: 0;
     transform: translateY(25px);
