@@ -543,7 +543,7 @@ body {
 /* Kontainer Ticker Vertikal */
 .gallery-ticker-container {
     position: relative;
-    height: 850px;
+    height: 520px;
     overflow: hidden;
     border-radius: 24px;
     background: var(--sky-50);
