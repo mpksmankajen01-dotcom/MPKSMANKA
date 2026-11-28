@@ -1,6 +1,6 @@
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxUjygcJEgnGyed9tQN3PQbF-E1fkaP0F8AcEx93MgRoj9UGPuaCV--y2DF-v0fztJbqg/exec"; 
-const GALLERY_SHEET_URL = "https://script.google.com/macros/s/AKfycbxUjygcJEgnGyed9tQN3PQbF-E1fkaP0F8AcEx93MgRoj9UGPuaCV--y2DF-v0fztJbqg/exec"; 
-const LEADERBOARD_SHEET_URL = "https://script.google.com/macros/s/AKfycbxUjygcJEgnGyed9tQN3PQbF-E1fkaP0F8AcEx93MgRoj9UGPuaCV--y2DF-v0fztJbqg/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzjkOeaw0nduGUxnstBEo6inb2hajvs5CPDTC27Ic0usxGqIemyHPvbMYcY8LTASU284Q/exec"; 
+const GALLERY_SHEET_URL = "https://script.google.com/macros/s/AKfycbzjkOeaw0nduGUxnstBEo6inb2hajvs5CPDTC27Ic0usxGqIemyHPvbMYcY8LTASU284Q/exec"; 
+const LEADERBOARD_SHEET_URL = "https://script.google.com/macros/s/AKfycbzjkOeaw0nduGUxnstBEo6inb2hajvs5CPDTC27Ic0usxGqIemyHPvbMYcY8LTASU284Q/exec";
 
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
