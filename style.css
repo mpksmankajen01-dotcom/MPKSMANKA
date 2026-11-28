@@ -559,7 +559,6 @@ body {
     animation: scrollUp 30s linear infinite;
 }
 
-/* Jeda animasi saat di-hover atau saat modal terbuka (.paused) */
 .gallery-ticker-container:hover .gallery-track,
 .gallery-track.paused {
     animation-play-state: paused;
@@ -570,7 +569,6 @@ body {
     100% { transform: translateY(-50%); }
 }
 
-/* Kartu Ticker */
 .ticker-card {
     background: var(--white);
     border-radius: 18px;
@@ -933,7 +931,7 @@ input:checked + .slider:before { transform: translateX(24px); }
 .modal-body h3 { color: var(--logo-blue-dark); margin-bottom: 8px; }
 
 /* =========================================
-   ANIMASI & RESPONSIVE
+   ANIMASI & RESPONSIVE (MOBILE)
 ========================================= */
 .reveal {
     opacity: 0;
@@ -952,7 +950,9 @@ input:checked + .slider:before { transform: translateX(24px); }
     }
     .about-logo-box { max-width: 240px; margin: 0 auto; }
     .hero-content h1 { font-size: 2.2rem; }
+    
     .menu-toggle { display: block; }
+    
     .nav-links {
         display: none;
         flex-direction: column;
@@ -960,4 +960,5 @@ input:checked + .slider:before { transform: translateX(24px); }
         top: 78px;
         left: 0;
         width: 100%;
-        backgrou
+        background: rgba(243, 249, 254, 0.98);
+        padding: 20px 25px;
