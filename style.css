@@ -962,3 +962,12 @@ input:checked + .slider:before { transform: translateX(24px); }
         width: 100%;
         background: rgba(243, 249, 254, 0.98);
         padding: 20px 25px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        border-bottom: 1px solid var(--sky-200);
+        gap: 16px;
+    }
+
+    .nav-links.active {
+        display: flex !important;
+    }
+}
