@@ -131,7 +131,7 @@
         </div>
     </section>
 
-    <!-- GALERI FOTO KEGIATAN (DINAMIS DARI GOOGLE SHEETS) -->
+    <!-- GALERI KEGIATAN TICKER -->
     <section id="galeri" class="section bg-soft-blue">
         <div class="container">
             <div class="section-header reveal">
@@ -140,19 +140,29 @@
                 <p>Jelajahi berbagai program kerja serta dokumentasi kegiatan di sini.</p>
             </div>
 
-            <div class="filter-buttons reveal">
-                <button class="filter-btn active" data-filter="all">Semua</button>
-                <button class="filter-btn" data-filter="Proker">Program Kerja</button>
-                <button class="filter-btn" data-filter="Dokumentasi Kegiatan">Dokumentasi Kegiatan</button>
+            <!-- Kolom Pencarian & Tombol Filter Kategori -->
+            <div class="gallery-controls reveal">
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="gallerySearchInput" placeholder="Cari judul kegiatan atau foto..." oninput="applyGalleryFilters()">
+                </div>
+                <div class="filter-buttons" id="filterButtonsContainer">
+                    <button class="filter-btn active" data-filter="all">Semua</button>
+                    <button class="filter-btn" data-filter="Proker">Program Kerja</button>
+                    <button class="filter-btn" data-filter="Dokumentasi Kegiatan">Dokumentasi Kegiatan</button>
+                </div>
             </div>
 
-            <div class="gallery-grid" id="galleryGrid">
-                <p style="text-align: center; color: var(--text-muted); grid-column: 1/-1;">Memuat galeri...</p>
+            <!-- Area Ticker Galeri Berjalan Mulus -->
+            <div class="gallery-ticker-container reveal" id="galleryContainer">
+                <div class="gallery-track" id="galleryTrack">
+                    <p style="text-align: center; color: var(--text-muted); width: 100%; padding: 40px;">Memuat galeri...</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- MINI GAME SPEED MATH (30 DETIK & LEADERBOARD SELALU TAMPIL) -->
+    <!-- MINI GAME SPEED MATH -->
     <section id="minigame" class="section bg-white">
         <div class="container">
             <div class="section-header reveal">
