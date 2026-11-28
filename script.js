@@ -36,71 +36,113 @@ window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
 
 // =========================================
-// 3. AMBIL DATA GALERI DARI GOOGLE SHEETS
+// 3. GALERI TICKER, FILTER, PENCARIAN & LIKE
 // =========================================
-async function loadDynamicGallery() {
-    const galleryGrid = document.getElementById('galleryGrid');
-    if (!galleryGrid) return;
+let globalGalleryData = [];
+let currentCategoryFilter = 'all';
+
+async function loadDynamicGalleryTicker() {
+    const galleryTrack = document.getElementById('galleryTrack');
+    if (!galleryTrack) return;
 
     try {
         const response = await fetch(GALLERY_SHEET_URL);
         const data = await response.json();
 
         if (data && data.length > 0) {
-            galleryGrid.innerHTML = ""; 
-            
-            data.forEach(item => {
-                const title = item.Judul || "Kegiatan MPK";
-                const date = item.Tanggal || "-";
-                const category = item.Kategori || "Rapat";
-                const desc = item.Deskripsi || "";
-                const img = item.LinkGambar || "LOGO MPK.png";
-
-                const tagLabel = category === 'Proker' ? 'Program Kerja' : 'Dokumentasi Kegiatan';
-
-                const galleryItemHTML = `
-                    <div class="gallery-item reveal active" data-category="${category}" onclick="openModal('${title}', '${date}', '${desc}', '${img}')">
-                        <img src="${img}" alt="${title}">
-                        <div class="gallery-overlay">
-                            <span class="gallery-tag">${tagLabel}</span>
-                            <h4>${title}</h4>
-                            <p><i class="fa-regular fa-calendar"></i> ${date}</p>
-                        </div>
-                    </div>
-                `;
-                galleryGrid.insertAdjacentHTML('beforeend', galleryItemHTML);
-            });
-            setupGalleryFilter();
+            globalGalleryData = data;
+            applyGalleryFilters();
+            setupCategoryFilterButtons();
+        } else {
+            galleryTrack.innerHTML = `<p style="text-align: center; color: var(--text-muted); width: 100%; padding: 40px;">Belum ada data galeri.</p>`;
         }
     } catch (error) {
         console.error("Gagal memuat galeri:", error);
-        galleryGrid.innerHTML = `<p style="text-align: center; color: #dc2626; grid-column: 1/-1;">Gagal memuat galeri dari Google Sheets.</p>`;
+        galleryTrack.innerHTML = `<p style="text-align: center; color: #dc2626; width: 100%; padding: 40px;">Gagal memuat galeri dari Google Sheets.</p>`;
     }
 }
 
-// =========================================
-// 4. FILTER GALERI KEGIATAN
-// =========================================
-function setupGalleryFilter() {
+// Render item ke ticker (diduplikasi agar infinite scroll mulus)
+function renderTickerItems(data) {
+    const galleryTrack = document.getElementById('galleryTrack');
+    if (!galleryTrack) return;
+
+    galleryTrack.innerHTML = "";
+
+    if (data.length === 0) {
+        galleryTrack.innerHTML = `<p style="text-align: center; color: var(--text-muted); width: 100%; padding: 40px;">Tidak ada foto yang cocok dengan pencarian.</p>`;
+        return;
+    }
+
+    const itemsToRender = data.length < 4 ? [...data, ...data, ...data] : [...data, ...data];
+
+    itemsToRender.forEach((item, index) => {
+        const title = item.Judul || "Kegiatan MPK";
+        const date = item.Tanggal || "-";
+        const category = item.Kategori || "Dokumentasi Kegiatan";
+        const desc = item.Deskripsi || "";
+        const img = item.LinkGambar || "LOGO MPK.png";
+        const likes = item.Likes || 0;
+        const id = item.ID || index;
+
+        const tagLabel = category === 'Proker' ? 'Program Kerja' : 'Dokumentasi Kegiatan';
+
+        const cardHTML = `
+            <div class="ticker-card" onclick="handleCardClick('${title}', '${date}', '${escapeHtml(desc)}', '${img}')">
+                <img src="${img}" alt="${title}">
+                <div class="ticker-card-body">
+                    <span class="gallery-tag">${tagLabel}</span>
+                    <h4>${title}</h4>
+                    <p style="font-size: 0.82rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> ${date}</p>
+                    <div class="ticker-card-actions" onclick="event.stopPropagation()">
+                        <span style="font-size: 0.78rem; font-weight: 600; color: var(--logo-blue);">${category}</span>
+                        <button class="like-btn" onclick="likePhoto('${id}', this)">
+                            <i class="fa-solid fa-heart"></i> <span class="like-count">${likes}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        galleryTrack.insertAdjacentHTML('beforeend', cardHTML);
+    });
+}
+
+function setupCategoryFilterButtons() {
     const filterBtns = document.querySelectorAll('.filter-btn');
-    const galleryItems = document.querySelectorAll('.gallery-item');
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            const filterValue = btn.getAttribute('data-filter');
-
-            galleryItems.forEach(item => {
-                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
+            currentCategoryFilter = btn.getAttribute('data-filter');
+            applyGalleryFilters();
         });
     });
+}
+
+function applyGalleryFilters() {
+    const searchQuery = document.getElementById('gallerySearchInput').value.toLowerCase();
+
+    const filtered = globalGalleryData.filter(item => {
+        const title = (item.Judul || "").toLowerCase();
+        const desc = (item.Deskripsi || "").toLowerCase();
+        const cat = (item.Kategori || "").trim();
+
+        const matchesSearch = title.includes(searchQuery) || desc.includes(searchQuery);
+        const matchesCategory = currentCategoryFilter === 'all' || cat === currentCategoryFilter;
+
+        return matchesSearch && matchesCategory;
+    });
+
+    renderTickerItems(filtered);
+}
+
+function handleCardClick(title, date, desc, img) {
+    const track = document.getElementById('galleryTrack');
+    if (track) track.classList.add('paused'); 
+
+    openModal(title, date, desc, img);
 }
 
 // =========================================
@@ -124,14 +166,44 @@ function openModal(title, date, desc, imgSrc) {
 
 function forceCloseModal() {
     if (photoModal) photoModal.classList.remove('active');
+    const track = document.getElementById('galleryTrack');
+    if (track) track.classList.remove('paused'); 
 }
 
 function closeModal(event) {
     if (event.target === photoModal) forceCloseModal();
 }
 
+async function likePhoto(photoId, buttonElement) {
+    const countSpan = buttonElement.querySelector('.like-count');
+    let currentLikes = parseInt(countSpan.textContent) || 0;
+    currentLikes++;
+    countSpan.textContent = currentLikes;
+
+    const formData = new URLSearchParams();
+    formData.append('type', 'like');
+    formData.append('id', photoId);
+
+    try {
+        if (GOOGLE_SCRIPT_URL !== "" && GOOGLE_SCRIPT_URL.includes("https://script.google.com")) {
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData.toString()
+            });
+        }
+    } catch (error) {
+        console.error("Gagal menyimpan like:", error);
+    }
+}
+
+function escapeHtml(text) {
+    return text.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+}
+
 // =========================================
-// 6. MINI GAME SPEED MATH (30 DETIK & LEADERBOARD GOOGLE SHEETS)
+// 6. MINI GAME SPEED MATH
 // =========================================
 let score = 0;
 let timeLeft = 30;
@@ -406,8 +478,8 @@ if (aspirasiForm) {
     });
 }
 
-// Inisialisasi galeri dan papan rangking saat halaman dimuat
+// Inisialisasi galeri ticker dan papan rangking saat halaman dimuat
 window.addEventListener('load', () => {
-    loadDynamicGallery();
+    loadDynamicGalleryTicker();
     displayLeaderboard();
 });
