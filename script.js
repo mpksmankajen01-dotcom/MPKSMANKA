@@ -174,15 +174,21 @@ function closeModal(event) {
     if (event.target === photoModal) forceCloseModal();
 }
 
-async function likePhoto(photoId, buttonElement) {
+async function likePhoto(rowIndex, buttonElement) {
     const countSpan = buttonElement.querySelector('.like-count');
     let currentLikes = parseInt(countSpan.textContent) || 0;
     currentLikes++;
     countSpan.textContent = currentLikes;
 
+    // Update nilai likes di memori lokal agar filter tetap sinkron
+    const targetItem = globalGalleryData.find(item => item.rowIndex === rowIndex);
+    if (targetItem) {
+        targetItem.Likes = currentLikes;
+    }
+
     const formData = new URLSearchParams();
     formData.append('type', 'like');
-    formData.append('id', photoId);
+    formData.append('rowIndex', rowIndex); // Menggunakan rowIndex agar sesuai dengan Google Apps Script
 
     try {
         if (GOOGLE_SCRIPT_URL !== "" && GOOGLE_SCRIPT_URL.includes("https://script.google.com")) {
