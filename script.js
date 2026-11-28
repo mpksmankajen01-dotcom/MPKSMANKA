@@ -2,6 +2,9 @@ const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzjkOeaw0nduG
 const GALLERY_SHEET_URL = "https://script.google.com/macros/s/AKfycbzjkOeaw0nduGUxnstBEo6inb2hajvs5CPDTC27Ic0usxGqIemyHPvbMYcY8LTASU284Q/exec"; 
 const LEADERBOARD_SHEET_URL = "https://script.google.com/macros/s/AKfycbzjkOeaw0nduGUxnstBEo6inb2hajvs5CPDTC27Ic0usxGqIemyHPvbMYcY8LTASU284Q/exec";
 
+// =========================================
+// 1. NAVBAR MOBILE TOGGLE
+// =========================================
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
 
@@ -76,27 +79,27 @@ function renderTickerItems(data) {
 
     const itemsToRender = data.length < 4 ? [...data, ...data, ...data] : [...data, ...data];
 
-    itemsToRender.forEach((item, index) => {
+    itemsToRender.forEach((item) => {
         const title = item.Judul || "Kegiatan MPK";
         const date = item.Tanggal || "-";
         const category = item.Kategori || "Dokumentasi Kegiatan";
         const desc = item.Deskripsi || "";
         const img = item.LinkGambar || "LOGO MPK.png";
         const likes = item.Likes || 0;
-        const id = item.ID || index;
+        const rowIndex = item.rowIndex; // Nomor baris asli di Google Sheets
 
         const tagLabel = category === 'Proker' ? 'Program Kerja' : 'Dokumentasi Kegiatan';
 
         const cardHTML = `
-            <div class="ticker-card" onclick="handleCardClick('${title}', '${date}', '${escapeHtml(desc)}', '${img}')">
-                <img src="${img}" alt="${title}">
+            <div class="ticker-card" onclick="handleCardClick('${escapeHtml(title)}', '${escapeHtml(String(date))}', '${escapeHtml(desc)}', '${img}')">
+                <img src="${img}" alt="${escapeHtml(title)}" onerror="this.src='LOGO MPK.png'">
                 <div class="ticker-card-body">
                     <span class="gallery-tag">${tagLabel}</span>
                     <h4>${title}</h4>
                     <p style="font-size: 0.82rem; color: var(--text-muted);"><i class="fa-regular fa-calendar"></i> ${date}</p>
                     <div class="ticker-card-actions" onclick="event.stopPropagation()">
                         <span style="font-size: 0.78rem; font-weight: 600; color: var(--logo-blue);">${category}</span>
-                        <button class="like-btn" onclick="likePhoto('${id}', this)">
+                        <button class="like-btn" onclick="likePhoto(${rowIndex}, this)">
                             <i class="fa-solid fa-heart"></i> <span class="like-count">${likes}</span>
                         </button>
                     </div>
@@ -122,7 +125,8 @@ function setupCategoryFilterButtons() {
 }
 
 function applyGalleryFilters() {
-    const searchQuery = document.getElementById('gallerySearchInput').value.toLowerCase();
+    const searchInput = document.getElementById('gallerySearchInput');
+    const searchQuery = searchInput ? searchInput.value.toLowerCase() : "";
 
     const filtered = globalGalleryData.filter(item => {
         const title = (item.Judul || "").toLowerCase();
@@ -146,7 +150,7 @@ function handleCardClick(title, date, desc, img) {
 }
 
 // =========================================
-// 5. MODAL DETAIL FOTO GALERI
+// 4. MODAL DETAIL FOTO GALERI & LIKE
 // =========================================
 const photoModal = document.getElementById('photoModal');
 const modalImg = document.getElementById('modalImg');
@@ -187,8 +191,8 @@ async function likePhoto(rowIndex, buttonElement) {
     }
 
     const formData = new URLSearchParams();
-    formData.append('type', 'like');
-    formData.append('rowIndex', rowIndex); // Menggunakan rowIndex agar sesuai dengan Google Apps Script
+    formData.append('type', 'like'); // Huruf kecil agar cocok dengan Apps Script
+    formData.append('rowIndex', rowIndex);
 
     try {
         if (GOOGLE_SCRIPT_URL !== "" && GOOGLE_SCRIPT_URL.includes("https://script.google.com")) {
@@ -209,7 +213,7 @@ function escapeHtml(text) {
 }
 
 // =========================================
-// 6. MINI GAME SPEED MATH
+// 5. MINI GAME SPEED MATH
 // =========================================
 let score = 0;
 let timeLeft = 30;
@@ -401,7 +405,7 @@ async function displayLeaderboard() {
 }
 
 // =========================================
-// 7. FORM ASPIRASI & KIRIM KE GOOGLE SHEETS
+// 6. FORM ASPIRASI & KIRIM KE GOOGLE SHEETS
 // =========================================
 const anonToggle = document.getElementById('anonToggle');
 const identityFields = document.getElementById('identityFields');
